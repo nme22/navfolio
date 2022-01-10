@@ -1,4 +1,12 @@
-import { Box, VStack, Heading, Text, Button, Link } from '@chakra-ui/react';
+import {
+  Box,
+  VStack,
+  Heading,
+  Text,
+  Button,
+  Link,
+  Tooltip,
+} from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { motion } from 'framer-motion';
 
@@ -33,15 +41,17 @@ const Contact = () => {
           </Text>
         </motion.h2>
         <Link href="mailto:navidmebrahimi22@gmail.com">
-          <Button
-            bg="orange.300"
-            color="white"
-            _hover={{
-              bgColor: 'rebeccapurple',
-            }}
-          >
-            Reach Out!
-          </Button>
+          <Tooltip label="Email Navid!" hasArrow arrowSize={15}>
+            <Button
+              bg="orange.300"
+              color="white"
+              _hover={{
+                bgColor: 'rebeccapurple',
+              }}
+            >
+              Reach Out!
+            </Button>
+          </Tooltip>
         </Link>
       </VStack>
     </Box>

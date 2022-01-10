@@ -1,6 +1,6 @@
 import { Container, Heading, Image, Text, VStack, Box } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const bg = useColorModeValue('whiteAlpha.300', 'gray.600');

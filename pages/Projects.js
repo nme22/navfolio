@@ -1,12 +1,11 @@
 import {
-  VStack,
   Heading,
-  Button,
   Box,
   Center,
   Image,
   HStack,
   Link,
+  Tooltip,
 } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { motion } from 'framer-motion';
@@ -55,26 +54,30 @@ const Projects = () => {
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 1.0 }}
             >
-              <Image
-                src="/datingIMG.png"
-                alt="Heart"
-                height={{ base: '40px', md: '36px', lg: '32px' }}
-                width={{ base: '40px', md: '36px', lg: '32px' }}
-                borderRadius="50%"
-              />
+              <Tooltip label="DateNight" hasArrow arrowSize={15}>
+                <Image
+                  src="/datingIMG.png"
+                  alt="Heart"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+                />
+              </Tooltip>
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 1.0 }}
             >
               <Link href="https://nextjs.org/">
-                <Image
-                  src="/next-js.svg"
-                  alt="NextJs"
-                  height={{ base: '40px', md: '36px', lg: '32px' }}
-                  width={{ base: '40px', md: '36px', lg: '32px' }}
-                  borderRadius="50%"
-                />
+                <Tooltip label="Next JS" hasArrow arrowSize={15}>
+                  <Image
+                    src="/next-js.svg"
+                    alt="NextJs"
+                    height={{ base: '40px', md: '36px', lg: '32px' }}
+                    width={{ base: '40px', md: '36px', lg: '32px' }}
+                    borderRadius="50%"
+                  />
+                </Tooltip>
               </Link>
             </motion.button>
             <motion.button
@@ -82,13 +85,15 @@ const Projects = () => {
               whileTap={{ scale: 1.0 }}
             >
               <Link href="https://vercel.com/">
-                <Image
-                  src="/vercellogo.png"
-                  alt="Vercel"
-                  height={{ base: '40px', md: '36px', lg: '32px' }}
-                  width={{ base: '40px', md: '36px', lg: '32px' }}
-                  borderRadius="50%"
-                />
+                <Tooltip label="Vercel" hasArrow arrowSize={15}>
+                  <Image
+                    src="/vercellogo.png"
+                    alt="Vercel"
+                    height={{ base: '40px', md: '36px', lg: '32px' }}
+                    width={{ base: '40px', md: '36px', lg: '32px' }}
+                    borderRadius="50%"
+                  />
+                </Tooltip>
               </Link>
             </motion.button>
             <motion.button
@@ -96,13 +101,15 @@ const Projects = () => {
               whileTap={{ scale: 1.0 }}
             >
               <Link href="https://chakra-ui.com/">
-                <Image
-                  src="/chakraui.png"
-                  alt="Chakra-UI"
-                  height={{ base: '40px', md: '36px', lg: '32px' }}
-                  width={{ base: '40px', md: '36px', lg: '32px' }}
-                  borderRadius="50%"
-                />
+                <Tooltip label="Chakra-UI" hasArrow arrowSize={15}>
+                  <Image
+                    src="/chakraui.png"
+                    alt="Chakra-UI"
+                    height={{ base: '40px', md: '36px', lg: '32px' }}
+                    width={{ base: '40px', md: '36px', lg: '32px' }}
+                    borderRadius="50%"
+                  />
+                </Tooltip>
               </Link>
             </motion.button>
           </HStack>
@@ -132,14 +139,16 @@ const Projects = () => {
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 1.0 }}
             >
-              <Link href="https://nextjs.org/">
-                <Image
-                  src="/javascript-logo.svg"
-                  alt="JavaScript"
-                  height={{ base: '40px', md: '36px', lg: '32px' }}
-                  width={{ base: '40px', md: '36px', lg: '32px' }}
-                  borderRadius="50%"
-                />
+              <Link href="https://www.javascript.com/">
+                <Tooltip label="JavaScript v6" hasArrow arrowSize={15}>
+                  <Image
+                    src="/javascript-logo.svg"
+                    alt="JavaScript"
+                    height={{ base: '40px', md: '36px', lg: '32px' }}
+                    width={{ base: '40px', md: '36px', lg: '32px' }}
+                    borderRadius="50%"
+                  />
+                </Tooltip>
               </Link>
             </motion.button>
             <motion.button
@@ -147,13 +156,15 @@ const Projects = () => {
               whileTap={{ scale: 1.0 }}
             >
               <Link href="https://nodejs.org">
-                <Image
-                  src="/nodejs-icon.svg"
-                  alt="Node.Js"
-                  height={{ base: '40px', md: '36px', lg: '32px' }}
-                  width={{ base: '40px', md: '36px', lg: '32px' }}
-                  borderRadius="50%"
-                />
+                <Tooltip label="Node JS" hasArrow arrowSize={15}>
+                  <Image
+                    src="/nodejs-icon.svg"
+                    alt="Node.Js"
+                    height={{ base: '40px', md: '36px', lg: '32px' }}
+                    width={{ base: '40px', md: '36px', lg: '32px' }}
+                    borderRadius="50%"
+                  />
+                </Tooltip>
               </Link>
             </motion.button>
           </HStack>
