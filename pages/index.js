@@ -28,7 +28,7 @@ export default function Home() {
             fontSize="48px"
             fontStyle="oblique"
             color={headingColor}
-            textShadow="2px 1px orange"
+            textShadow="3px 3px white"
           >
             Navid M Ebrahimi
           </Heading>
@@ -42,7 +42,7 @@ export default function Home() {
             fontSize="48px"
             fontStyle="oblique"
             color={headingColor}
-            textShadow="2px 1px orange"
+            textShadow="3px 3px white"
           >
             Full-Stack Junior Developer{' '}
           </Heading>

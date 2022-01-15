@@ -11,7 +11,7 @@ import { useColorModeValue } from '@chakra-ui/color-mode';
 import { motion } from 'framer-motion';
 
 const Contact = () => {
-  const bg = useColorModeValue('whiteAlpha.400', 'gray.600');
+  const bg = useColorModeValue('whiteAlpha.400', 'gray.700');
   const color = useColorModeValue('gray.600', 'orange.300');
 
   return (
