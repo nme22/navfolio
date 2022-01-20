@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import Layout from '../components/Layout';
 
+import Layout from '../components/Layout';
 const theme = {
   styles: {
     global: {

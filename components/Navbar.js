@@ -29,7 +29,7 @@ const PortNavbar = () => {
           borderColor: 'orange.400',
         }}
       >
-        Toggle Light
+        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
       </Button>
 
       <Link href="/">Home</Link>

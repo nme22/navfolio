@@ -47,7 +47,7 @@ const Projects = () => {
             whileTap={{ scale: 1.0 }}
             fontWeight="semibold"
           >
-            DateNight
+            <Link href="https://github.com/nme22/dateNight">DateNight</Link>
           </motion.button>
           <HStack p={4} justifyContent="space-around">
             <motion.button
@@ -160,6 +160,59 @@ const Projects = () => {
                   <Image
                     src="/nodejs-icon.svg"
                     alt="Node.Js"
+                    height={{ base: '40px', md: '36px', lg: '32px' }}
+                    width={{ base: '40px', md: '36px', lg: '32px' }}
+                    borderRadius="50%"
+                  />
+                </Tooltip>
+              </Link>
+            </motion.button>
+          </HStack>
+        </Box>
+        <Box
+          w={{ base: '45%', md: '35%', lg: '30%' }}
+          h={{ base: '45%', md: '35%', lg: '30%' }}
+          bgGradient="linear(to-r, orange.400, teal.400 )"
+          borderRadius="5%"
+          d="flex"
+          flexDir="column"
+          p={1}
+          m={2}
+        >
+          <motion.button
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 1.0 }}
+            fontWeight="semibold"
+          >
+            <Link href="https://github.com/nme22/todolist">Todo List App</Link>
+          </motion.button>
+
+          <HStack p={4} justifyContent="space-around">
+            <motion.button
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 1.0 }}
+            >
+              <Link href="https://nextjs.org/">
+                <Tooltip label="Next JS" hasArrow arrowSize={15}>
+                  <Image
+                    src="/next-js.svg"
+                    alt="NextJs"
+                    height={{ base: '40px', md: '36px', lg: '32px' }}
+                    width={{ base: '40px', md: '36px', lg: '32px' }}
+                    borderRadius="50%"
+                  />
+                </Tooltip>
+              </Link>
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 1.0 }}
+            >
+              <Link href="https://chakra-ui.com/">
+                <Tooltip label="Chakra-UI" hasArrow arrowSize={15}>
+                  <Image
+                    src="/chakraui.png"
+                    alt="Chakra-UI"
                     height={{ base: '40px', md: '36px', lg: '32px' }}
                     width={{ base: '40px', md: '36px', lg: '32px' }}
                     borderRadius="50%"
