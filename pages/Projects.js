@@ -11,13 +11,18 @@ import { useColorModeValue } from '@chakra-ui/color-mode';
 import { motion } from 'framer-motion';
 
 const Projects = () => {
-  const bg = useColorModeValue('whiteAlpha.300', 'gray.600');
+  const bg = useColorModeValue('whiteAlpha.300', 'gray.700');
   return (
     /// Box instead of DIV, Same thing
     <Box
-      w={{ base: '80%', md: '90%', lg: '100%' }}
+      w={{ base: '100%', md: '90%', lg: '85%' }}
       h={{ base: '80%', md: '90%', lg: '100%' }}
+      maxW={{ base: '100%', md: '100%', lg: '100%' }}
+      maxH={{ base: '100%', md: '100%', lg: '100%' }}
       bg={bg}
+      borderColor={'whiteAlpha.100'}
+      borderWidth="2px"
+      borderRadius="2xl"
     >
       <Center>
         <Heading
@@ -25,7 +30,7 @@ const Projects = () => {
           bgGradient="linear(to-r, orange.400, teal.400 )"
           bgClip="text"
           fontSize="4xl"
-          fontWeight="bold"
+          fontWeight="extrabold"
         >
           {' '}
           Projects
@@ -36,7 +41,9 @@ const Projects = () => {
           w={{ base: '45%', md: '35%', lg: '30%' }}
           h={{ base: '45%', md: '35%', lg: '30%' }}
           bgGradient="linear(to-r, orange.400, teal.400 )"
-          borderRadius="5%"
+          borderColor={'blackAlpha.500'}
+          borderWidth="2px"
+          borderRadius="2xl"
           d="flex"
           flexDir="column"
           p={1}
@@ -118,7 +125,9 @@ const Projects = () => {
           w={{ base: '45%', md: '35%', lg: '30%' }}
           h={{ base: '45%', md: '35%', lg: '30%' }}
           bgGradient="linear(to-r, orange.400, teal.400 )"
-          borderRadius="5%"
+          borderColor={'blackAlpha.500'}
+          borderWidth="2px"
+          borderRadius="2xl"
           d="flex"
           flexDir="column"
           p={1}
@@ -173,7 +182,9 @@ const Projects = () => {
           w={{ base: '45%', md: '35%', lg: '30%' }}
           h={{ base: '45%', md: '35%', lg: '30%' }}
           bgGradient="linear(to-r, orange.400, teal.400 )"
-          borderRadius="5%"
+          borderColor={'blackAlpha.500'}
+          borderWidth="2px"
+          borderRadius="2xl"
           d="flex"
           flexDir="column"
           p={1}
