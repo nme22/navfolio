@@ -6,7 +6,8 @@ const theme = {
   styles: {
     global: {
       body: {
-        background: 'linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c)',
+        background:
+          'linear-gradient(90deg, rgba(0,144,255,1) 0%,rgba(255,255,255,1) 100% )',
       },
     },
   },

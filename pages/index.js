@@ -1,7 +1,6 @@
 import {
   Container,
   Heading,
-  Image,
   Text,
   VStack,
   Box,
@@ -13,7 +12,7 @@ import { motion } from 'framer-motion';
 
 export default function Home() {
   const bg = useColorModeValue('whiteAlpha.300', 'gray.600');
-  const color = useColorModeValue('gray.600', 'orange.200');
+  const color = useColorModeValue('gray.600', 'blue.200');
   const headingColor = useColorModeValue('blue.400', 'gray.600');
   return (
     <Box
@@ -37,7 +36,12 @@ export default function Home() {
             fontSize={{ base: '24px', md: '36px', lg: '48px' }}
             fontStyle="oblique"
             color={headingColor}
-            textShadow="3px 3px white"
+            bgGradient={{
+              lg: 'linear(to-r, whiteAlpha.700,  whiteAlpha.700)',
+              md: 'linear(to-r, red.500,  blue.500)',
+              base: 'linear(to-r, red.500,  blue.500)',
+            }}
+            bgClip="text"
           >
             Navid M Ebrahimi
           </Heading>
@@ -50,23 +54,29 @@ export default function Home() {
           <Heading
             fontSize={{ base: '24px', md: '36px', lg: '48px' }}
             fontStyle="oblique"
-            color={headingColor}
-            textShadow="3px 3px white"
+            bgGradient={{
+              lg: 'linear(to-r, whiteAlpha.700,  whiteAlpha.700)',
+              md: 'linear(to-r, red.500,  blue.500)',
+              base: 'linear(to-r, red.500,  blue.500)',
+            }}
+            bgClip="text"
           >
             Full-Stack Junior Developer{' '}
           </Heading>
         </motion.h2>
 
-        <WrapItem>
-          <Image
-            src="/youngshwap.png"
-            alt="picture of a male with a beard"
-            p={5}
-            m={1}
-            h="250px"
-            w="350px"
-          />
-        </WrapItem>
+        <Avatar
+          src="/youngshwap.png"
+          alt="picture of a male with a beard"
+          name="Navid M Ebrahimi"
+          background={bg}
+          // bgGradient={{
+          //   lg: 'linear(to-t,  yellow.100,whiteAlpha.900, blue.400, )',
+          //   md: 'linear(to-t, red.500, whiteAlpha.900, blue.500)',
+          //   base: 'linear(to-t, red.500, whiteAlpha.900, blue.500)',
+          // }}
+          size={{ base: '2x1', md: '2x1', lg: 'xl' }}
+        />
 
         <Container
           maxW="container.lg"

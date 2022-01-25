@@ -12,7 +12,8 @@ import { motion } from 'framer-motion';
 
 const Contact = () => {
   const bg = useColorModeValue('whiteAlpha.400', 'gray.700');
-  const color = useColorModeValue('gray.600', 'orange.300');
+  const color = useColorModeValue('gray.600', 'blue.300');
+  const buttonColor = useColorModeValue('whiteAlpha.700', 'gray.700');
 
   return (
     <Box
@@ -43,8 +44,8 @@ const Contact = () => {
         <Link href="mailto:navidmebrahimi22@gmail.com">
           <Tooltip label="Email Navid!" hasArrow arrowSize={15}>
             <Button
-              bg="orange.300"
-              color="white"
+              bg={color}
+              color={buttonColor}
               _hover={{
                 bgColor: 'rebeccapurple',
               }}

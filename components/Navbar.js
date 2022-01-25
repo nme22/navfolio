@@ -14,7 +14,7 @@ const PortNavbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   const bg = useColorModeValue('whiteAlpha.300', 'gray.700');
-  const color = useColorModeValue('blue.400', 'orange.300');
+  const color = useColorModeValue('gray.700', 'blue.200');
   return (
     <HStack
       m={3}

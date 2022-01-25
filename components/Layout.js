@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
     <VStack>
       <PortNavbar />
       {children}
-      <PortFooter mt={50} />
+      <PortFooter />
     </VStack>
   );
 };
