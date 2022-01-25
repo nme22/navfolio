@@ -1,14 +1,20 @@
-import { HStack, Button, useColorMode, Box, Text } from '@chakra-ui/react';
+import {
+  HStack,
+  useColorMode,
+  IconButton,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
-import Link from 'next/link';
-import { FaReact } from 'react-icons/fa';
-import { withTheme } from '@emotion/react';
+import { FaMoon, FaSun } from 'react-icons/fa';
+import { ChevronRightIcon } from '@chakra-ui/icons';
 
 const PortNavbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   const bg = useColorModeValue('whiteAlpha.300', 'gray.700');
-  const color = useColorModeValue('whiteAlpha.700', 'gray.700');
+  const color = useColorModeValue('blue.400', 'orange.300');
   return (
     <HStack
       m={3}
@@ -18,23 +24,38 @@ const PortNavbar = () => {
       w={{ base: '100%', md: '100%', lg: '100%' }}
       bg={bg}
     >
-      <Button
+      <IconButton
+        icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}
+        isRound="true"
+        size="md"
         onClick={toggleColorMode}
-        bg="orange.300"
-        color={color}
-        _hover={{
-          bgColor: 'rebeccapurple',
-        }}
-        _active={{
-          borderColor: 'orange.400',
-        }}
-      >
-        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-      </Button>
+        backgroundColor={bg}
+      />
 
-      <Link href="/">Home</Link>
-      <Link href="/Projects">Projects</Link>
-      <Link href="/Contact">Contact</Link>
+      <Breadcrumb
+        spacing={{ base: '36px', md: ' 72px', lg: '144px' }}
+        separator={<ChevronRightIcon color="gray.500" />}
+      >
+        {' '}
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/" color={color} fontWeight="extrabold">
+            Home
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/Projects" color={color} fontWeight="extrabold">
+            Projects
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/Contact" color={color} fontWeight="extrabold">
+            Contact
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        {/* <Link href="/">Home</Link>
+        <Link href="/Projects">Projects</Link>
+        <Link href="/Contact">Contact</Link> */}
+      </Breadcrumb>
     </HStack>
   );
 };

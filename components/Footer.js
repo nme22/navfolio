@@ -12,7 +12,7 @@ import {
 const PortFooter = () => {
   return (
     <Box mb="-50px" position="sticky">
-      <HStack mt={50} h="100%">
+      <HStack mt="12px">
         <Link href="https://www.facebook.com/navid.ebrahimi.10/">
           <Tooltip label="Facebook" hasArrow arrowSize={15}>
             <Button colorScheme="facebook" leftIcon={FaFacebook}>
@@ -30,7 +30,7 @@ const PortFooter = () => {
         <Link href="https://github.com/nme22">
           <Tooltip label="Github" hasArrow arrowSize={15}>
             <Button colorScheme="gray" leftIcon={FaGithub}>
-              <FaGithub size={30} />
+              <FaGithub size={28} />
             </Button>
           </Tooltip>
         </Link>
