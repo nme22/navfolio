@@ -178,7 +178,7 @@ const Projects = () => {
           whileTap={{ scale: 1.0 }}
           fontWeight="semibold"
         >
-          <Link href="https://github.com/nme22/todolist">Todo List App</Link>
+          <Link href="https://todolist-nme.vercel.app/">Todo List App</Link>
         </motion.button>
 
         <HStack p={4} justifyContent="space-around">
