@@ -1,4 +1,4 @@
-import { HStack, Button, Link, Box, Tooltip, VStack } from '@chakra-ui/react';
+import { HStack, Button, Link, Tooltip } from '@chakra-ui/react';
 
 import { FaGithub, FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa';
 
