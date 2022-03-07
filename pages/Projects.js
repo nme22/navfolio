@@ -232,7 +232,7 @@ const Projects = () => {
             >
                <Heading size="md" my="8">
                   <LinkOverlay
-                     href="https://ezzatskitchen-4txufm09s-nme22.vercel.app/"
+                     href="https://ezzatskitchen.vercel.app/"
                      target="_blank"
                   >
                      Ezzat's Kitchen (In Progress)
