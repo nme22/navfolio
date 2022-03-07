@@ -23,6 +23,7 @@ const PortNavbar = () => {
          justifyContent="space-around"
          w={{ base: '100%', md: '100%', lg: '100%' }}
          bg={bg}
+         mt={-3}
       >
          <IconButton
             icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}

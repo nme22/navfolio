@@ -1,14 +1,13 @@
 import {
    Heading,
-   Box,
    Image,
    HStack,
-   Link,
-   Tooltip,
-   VStack,
+   Stack,
+   LinkOverlay,
+   LinkBox,
+   Text,
 } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
-import { motion } from 'framer-motion';
 
 const Projects = () => {
    const bg = useColorModeValue('whiteAlpha.300', 'gray.700');
@@ -17,13 +16,16 @@ const Projects = () => {
       // Display projects into a flexbox with a flex direction of column so that the projects line up neatly
       // Let the name of the project be a link to the deployed application or the github repo.
       // Come back and refactor the project divs into a resuseable component
-      <VStack
+      <Stack
          w={{ base: '100%', md: '100%', lg: '100%' }}
          h={{ base: '85%', md: '100%', lg: '100%' }}
          maxW={{ base: '100%', md: '100%', lg: '100%' }}
          maxH={{ base: '100%', md: '100%', lg: '100%' }}
          bg={bg}
          borderColor={'whiteAlpha.100'}
+         justifyContent="flex-start"
+         flexDir="column"
+         align="center"
          borderWidth="2px"
          borderRadius="2xl"
          mb={2}
@@ -40,278 +42,186 @@ const Projects = () => {
             Projects
          </Heading>
 
-         <Box
-            w={{ base: '45%', md: '45%', lg: '40%' }}
-            h={{ base: '45%', md: '45%', lg: '30%' }}
+         <LinkBox
+            as="article"
+            maxW="sm"
+            p="5"
+            borderWidth="1px"
+            borderColor="black"
             bgGradient="linear(to-r, whiteAlpha.300, blue.600 )"
-            borderColor={'blackAlpha.500'}
-            borderWidth="2px"
-            borderRadius="2xl"
-            d="flex"
-            flexDir="column"
-            p={1}
-            m={2}
+            rounded="md"
          >
-            <motion.button
-               whileHover={{ scale: 1.2 }}
-               whileTap={{ scale: 1.0 }}
-               fontWeight="semibold"
-            >
-               <Link href="https://github.com/nme22/dateNight">DateNight</Link>
-            </motion.button>
-            <HStack p={4} justifyContent="space-around">
-               <motion.button
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.0 }}
+            <Heading size="md" my="8">
+               <LinkOverlay
+                  href="https://github.com/nme22/dateNight"
+                  target="_blank"
                >
-                  <Tooltip label="DateNight" hasArrow arrowSize={15}>
-                     <Image
-                        src="/datingIMG.png"
-                        alt="Heart"
-                        height={{ base: '40px', md: '36px', lg: '32px' }}
-                        width={{ base: '40px', md: '36px', lg: '32px' }}
-                        borderRadius="50%"
-                     />
-                  </Tooltip>
-               </motion.button>
-               <motion.button
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.0 }}
-               >
-                  <Link href="https://nextjs.org/">
-                     <Tooltip label="Next JS" hasArrow arrowSize={15}>
-                        <Image
-                           src="/next-js.svg"
-                           alt="NextJs"
-                           height={{ base: '40px', md: '36px', lg: '32px' }}
-                           width={{ base: '40px', md: '36px', lg: '32px' }}
-                           borderRadius="50%"
-                        />
-                     </Tooltip>
-                  </Link>
-               </motion.button>
-               <motion.button
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.0 }}
-               >
-                  <Link href="https://vercel.com/">
-                     <Tooltip label="Vercel" hasArrow arrowSize={15}>
-                        <Image
-                           src="/vercellogo.png"
-                           alt="Vercel"
-                           height={{ base: '40px', md: '36px', lg: '32px' }}
-                           width={{ base: '40px', md: '36px', lg: '32px' }}
-                           borderRadius="50%"
-                        />
-                     </Tooltip>
-                  </Link>
-               </motion.button>
-               <motion.button
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.0 }}
-               >
-                  <Link href="https://chakra-ui.com/">
-                     <Tooltip label="Chakra-UI" hasArrow arrowSize={15}>
-                        <Image
-                           src="/chakraui.png"
-                           alt="Chakra-UI"
-                           height={{ base: '40px', md: '36px', lg: '32px' }}
-                           width={{ base: '40px', md: '36px', lg: '32px' }}
-                           borderRadius="50%"
-                        />
-                     </Tooltip>
-                  </Link>
-               </motion.button>
+                  DateNight
+               </LinkOverlay>
+            </Heading>
+            <HStack p="2px" justifyContent="space-evenly">
+               <Image
+                  src="/datingIMG.png"
+                  alt="Heart"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+               />
+               <Image
+                  src="/chakraui.png"
+                  alt="Chakra-UI"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+               />
+               <Image
+                  src="/next-js.svg"
+                  alt="NextJs"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+               />
+               <Image
+                  src="/vercellogo.png"
+                  alt="Vercel"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+               />
             </HStack>
-         </Box>
-
-         <Box
-            w={{ base: '45%', md: '45%', lg: '40%' }}
-            h={{ base: '45%', md: '45%', lg: '30%' }}
+            <Text p={2}>
+               A dating app designed to keep your romantic life from getting
+               stale! Record the dates you go on, leave notes, and remember the
+               good times!
+            </Text>
+         </LinkBox>
+         <LinkBox
+            as="article"
+            maxW="sm"
+            p="5"
+            borderWidth="1px"
+            borderColor="black"
             bgGradient="linear(to-r, whiteAlpha.300, blue.600 )"
-            borderColor={'blackAlpha.500'}
-            borderWidth="2px"
-            borderRadius="2xl"
-            d="flex"
-            flexDir="column"
-            p={1}
-            m={2}
+            rounded="md"
          >
-            <motion.button
-               whileHover={{ scale: 1.2 }}
-               whileTap={{ scale: 1.0 }}
-               fontWeight="semibold"
-            >
-               <Link href="https://github.com/nme22/README-Generator">
-                  ReadMe Generator
-               </Link>
-            </motion.button>
-
-            <HStack p={4} justifyContent="space-around">
-               <motion.button
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.0 }}
+            <Heading size="md" my="8">
+               <LinkOverlay
+                  href="https://github.com/nme22/README-Generator"
+                  target="_blank"
                >
-                  <Link href="https://www.javascript.com/">
-                     <Tooltip label="JavaScript v6" hasArrow arrowSize={15}>
-                        <Image
-                           src="/javascript-logo.svg"
-                           alt="JavaScript"
-                           height={{ base: '40px', md: '36px', lg: '32px' }}
-                           width={{ base: '40px', md: '36px', lg: '32px' }}
-                           borderRadius="50%"
-                        />
-                     </Tooltip>
-                  </Link>
-               </motion.button>
-               <motion.button
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.0 }}
-               >
-                  <Link href="https://nodejs.org">
-                     <Tooltip label="Node JS" hasArrow arrowSize={15}>
-                        <Image
-                           src="/nodejs-icon.svg"
-                           alt="Node.Js"
-                           height={{ base: '40px', md: '36px', lg: '32px' }}
-                           width={{ base: '40px', md: '36px', lg: '32px' }}
-                           borderRadius="50%"
-                        />
-                     </Tooltip>
-                  </Link>
-               </motion.button>
+                  README Generator
+               </LinkOverlay>
+            </Heading>
+            <HStack p="2px" justifyContent="space-evenly">
+               <Image
+                  src="/javascript-logo.svg"
+                  alt="JavaScript"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+               />
+               <Image
+                  src="/nodejs-icon.svg"
+                  alt="Node.Js"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+               />
             </HStack>
-         </Box>
-         <Box
-            w={{ base: '45%', md: '45%', lg: '40%' }}
-            h={{ base: '45%', md: '45%', lg: '30%' }}
-            borderColor={'blackAlpha.500'}
-            borderWidth="2px"
-            borderRadius="2xl"
-            d="flex"
-            flexDir="column"
-            p={1}
-            m={2}
+            <Text p={2}>
+               A node.js application that creates a professional ReadMe in just
+               a few minutes. Fork the application, download dependancies, and
+               run node index.js to create!
+            </Text>
+         </LinkBox>
+         <LinkBox
+            as="article"
+            maxW="sm"
+            p="5"
+            borderWidth="1px"
+            borderColor="black"
             bgGradient="linear(to-r, whiteAlpha.300, blue.600 )"
+            rounded="md"
          >
-            <motion.button
-               whileHover={{ scale: 1.2 }}
-               whileTap={{ scale: 1.0 }}
-               fontWeight="semibold"
-            >
-               <Link href="https://todolist-nme.vercel.app/">
-                  Todo List App
-               </Link>
-            </motion.button>
-
-            <HStack p={4} justifyContent="space-around">
-               <motion.button
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.0 }}
+            <Heading size="md" my="8">
+               <LinkOverlay
+                  href="https://todolist-nme.vercel.app/"
+                  target="_blank"
                >
-                  <Link href="https://nextjs.org/">
-                     <Tooltip label="Next JS" hasArrow arrowSize={15}>
-                        <Image
-                           src="/next-js.svg"
-                           alt="NextJs"
-                           height={{ base: '40px', md: '36px', lg: '32px' }}
-                           width={{ base: '40px', md: '36px', lg: '32px' }}
-                           borderRadius="md"
-                        />
-                     </Tooltip>
-                  </Link>
-               </motion.button>
-               <motion.button
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.0 }}
-               >
-                  <Link href="https://chakra-ui.com/">
-                     <Tooltip label="Chakra-UI" hasArrow arrowSize={15}>
-                        <Image
-                           src="/chakraui.png"
-                           alt="Chakra-UI"
-                           height={{ base: '40px', md: '36px', lg: '32px' }}
-                           width={{ base: '40px', md: '36px', lg: '32px' }}
-                           borderRadius="50%"
-                        />
-                     </Tooltip>
-                  </Link>
-               </motion.button>
+                  Todo List App!
+               </LinkOverlay>
+            </Heading>
+            <HStack p="2px" justifyContent="space-evenly">
+               <Image
+                  src="/next-js.svg"
+                  alt="Next.js"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+               />
+               <Image
+                  src="/chakraui.png"
+                  alt="chakra-ui"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+               />
             </HStack>
-         </Box>
-         <Box
-            w={{ base: '45%', md: '45%', lg: '40%' }}
-            h={{ base: '45%', md: '45%', lg: '30%' }}
+            <Text p={2}>
+               A To Do list created with next.js and chakra-ui! Add things to do
+               or delete things to do. Come back whenever and have your todo's
+               saved in local storage!
+            </Text>
+         </LinkBox>
+         <LinkBox
+            as="article"
+            maxW="sm"
+            p="5"
+            borderWidth="1px"
+            borderColor="black"
             bgGradient="linear(to-r, whiteAlpha.300, blue.600 )"
-            borderColor={'blackAlpha.500'}
-            borderWidth="2px"
-            borderRadius="2xl"
-            d="flex"
-            flexDir="column"
-            p={1}
-            m={2}
+            rounded="md"
          >
-            <motion.button
-               whileHover={{ scale: 1.2 }}
-               whileTap={{ scale: 1.0 }}
-               fontWeight="semibold"
-            >
-               <Link href="https://githubsearch-eta.vercel.app/">
+            <Heading size="md" my="8">
+               <LinkOverlay
+                  href="https://githubsearch-eta.vercel.app/"
+                  target="_blank"
+               >
                   Github Search
-               </Link>
-            </motion.button>
-            <HStack p={4} justifyContent="space-around">
-               <motion.button
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.0 }}
-               >
-                  <Link href="https://nextjs.org/">
-                     <Tooltip label="Next JS" hasArrow arrowSize={15}>
-                        <Image
-                           src="/next-js.svg"
-                           alt="NextJs"
-                           height={{ base: '40px', md: '36px', lg: '32px' }}
-                           width={{ base: '40px', md: '36px', lg: '32px' }}
-                           borderRadius="50%"
-                        />
-                     </Tooltip>
-                  </Link>
-               </motion.button>
-               <motion.button
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.0 }}
-               >
-                  <Link href="https://vercel.com/">
-                     <Tooltip label="Vercel" hasArrow arrowSize={15}>
-                        <Image
-                           src="/vercellogo.png"
-                           alt="Vercel"
-                           height={{ base: '40px', md: '36px', lg: '32px' }}
-                           width={{ base: '40px', md: '36px', lg: '32px' }}
-                           borderRadius="50%"
-                        />
-                     </Tooltip>
-                  </Link>
-               </motion.button>
-               <motion.button
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.0 }}
-               >
-                  <Link href="https://chakra-ui.com/">
-                     <Tooltip label="Chakra-UI" hasArrow arrowSize={15}>
-                        <Image
-                           src="/chakraui.png"
-                           alt="Chakra-UI"
-                           height={{ base: '40px', md: '36px', lg: '32px' }}
-                           width={{ base: '40px', md: '36px', lg: '32px' }}
-                           borderRadius="50%"
-                        />
-                     </Tooltip>
-                  </Link>
-               </motion.button>
+               </LinkOverlay>
+            </Heading>
+            <HStack p="2px" justifyContent="space-evenly">
+               <Image
+                  src="/next-js.svg"
+                  alt="Next.js"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+               />
+               <Image
+                  src="/vercellogo.png"
+                  alt="Vercel"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+               />
+               <Image
+                  src="/chakraui.png"
+                  alt="chakra-ui"
+                  height={{ base: '40px', md: '36px', lg: '32px' }}
+                  width={{ base: '40px', md: '36px', lg: '32px' }}
+                  borderRadius="50%"
+               />
             </HStack>
-         </Box>
-      </VStack>
+            <Text p={2}>
+               A Github search application that allows you to search through the
+               github users, pull any relevant users based on your search query,
+               and display a paginated list of results with relevant data
+               pertaining to that specific user. Created with Next.js,
+               Chakra-Ui, and deployed with vercel!
+            </Text>
+         </LinkBox>
+      </Stack>
    );
 };
 
