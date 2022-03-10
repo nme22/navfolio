@@ -7,8 +7,8 @@ const theme = {
    styles: {
       global: {
          body: {
-            background:
-               'linear-gradient(270deg, rgba(0,144,255,1) 0%,rgba(255,255,255,1) 100% )',
+            bgImage: './background-image.jpeg',
+            backgroundSize: 'cover',
          },
       },
    },

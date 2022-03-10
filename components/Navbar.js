@@ -13,8 +13,7 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 const PortNavbar = () => {
    const { colorMode, toggleColorMode } = useColorMode();
 
-   const bg = useColorModeValue('whiteAlpha.300', 'gray.700');
-   const color = useColorModeValue('gray.700', 'blue.200');
+   const color = useColorModeValue('whiteAlpha.900', 'blue.200');
    return (
       <HStack
          m={3}
@@ -22,20 +21,20 @@ const PortNavbar = () => {
          p={3}
          justifyContent="space-around"
          w={{ base: '100%', md: '100%', lg: '100%' }}
-         bg={bg}
          mt={-3}
       >
          <IconButton
             icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}
             isRound="true"
-            size="md"
+            size="sm"
             onClick={toggleColorMode}
-            backgroundColor={bg}
+            backgroundColor={color}
          />
 
          <Breadcrumb
             spacing={{ base: '36px', md: ' 72px', lg: '144px' }}
             separator={<ChevronRightIcon color="gray.500" />}
+            fontSize="18px"
          >
             {' '}
             <BreadcrumbItem>
