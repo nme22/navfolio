@@ -242,9 +242,8 @@ const Projects = () => {
                   </HStack>
                   <Text p={2}>
                      A Github search application that allows you to search
-                     through the github users, pull any relevant users based on
-                     your search query, and display a paginated list of results
-                     with relevant data pertaining to that specific user.
+                     through the github users, pull user data based on your
+                     search query, and display a paginated list of results.
                   </Text>
                </LinkBox>
             </motion.div>

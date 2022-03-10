@@ -11,19 +11,18 @@ import { useColorModeValue } from '@chakra-ui/color-mode';
 import { motion } from 'framer-motion';
 
 const Contact = () => {
-   const bg = useColorModeValue('whiteAlpha.400', 'gray.700');
-   const color = useColorModeValue('gray.600', 'blue.300');
-   const buttonColor = useColorModeValue('whiteAlpha.700', 'gray.700');
+   const color = useColorModeValue('whiteAlpha.900', 'blue.300');
+   const buttonColor = useColorModeValue('black', 'gray.700');
 
    return (
       <Box
-         bg={bg}
          w={{ base: '80%', md: '90%', lg: '100%' }}
          h={{ base: '80%', md: '90%', lg: '100%' }}
          d="flex"
+         p={10}
       >
          <VStack justifyContent="space-between">
-            <Heading color={color} p={2} fontSize="48px">
+            <Heading color={color} p={2} fontSize="48px" pt={4}>
                Thank you for visiting the page!{' '}
             </Heading>
             <motion.h2
@@ -50,6 +49,7 @@ const Contact = () => {
                <Tooltip label="Email Navid!" hasArrow arrowSize={15}>
                   <Button
                      bg={color}
+                     m={2}
                      color={buttonColor}
                      _hover={{
                         bgColor: 'rebeccapurple',
