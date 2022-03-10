@@ -7,7 +7,7 @@ const theme = {
    styles: {
       global: {
          body: {
-            bgImage: './background-image.jpeg',
+            bgImage: './portfolio-background.png',
             backgroundSize: 'cover',
          },
       },
