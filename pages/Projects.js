@@ -35,7 +35,7 @@ const Projects = () => {
             h={{ base: '85%', md: '100%', lg: '100%' }}
             maxW={{ base: '100%', md: '100%', lg: '100%' }}
             maxH={{ base: '100%', md: '100%', lg: '100%' }}
-            justifyContent="space-around"
+            justifyContent="space-between"
             flexDir="row"
             align="center"
             flexWrap="wrap"

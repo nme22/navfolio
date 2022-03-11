@@ -19,7 +19,7 @@ const Contact = () => {
          w={{ base: '80%', md: '90%', lg: '100%' }}
          h={{ base: '80%', md: '90%', lg: '100%' }}
          d="flex"
-         p={10}
+         pt={24}
       >
          <VStack justifyContent="space-between">
             <Heading color={color} p={2} fontSize="48px" pt={4}>

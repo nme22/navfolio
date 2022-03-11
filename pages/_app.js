@@ -9,6 +9,7 @@ const theme = {
          body: {
             bgImage: './portfolio-background.png',
             backgroundSize: 'cover',
+            height: '150vh',
          },
       },
    },

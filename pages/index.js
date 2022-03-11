@@ -7,21 +7,20 @@ export default function Home() {
    const color = useColorModeValue('gray.600', 'blue.200');
    const headingColor = useColorModeValue('blue.400', 'gray.600');
    return (
-      // Fix background of Avatar icon so that it displays a beach or some kind of relaxing setting
       // Come back and refactor code so that certain elements dont just change color but the whole app does
       <Box
          w={{ base: '80%', md: '90%', lg: '100%' }}
          h={{ base: '80%', md: '90%', lg: '100%' }}
-         borderRadius="50px"
-         pt={7}
-         mb={3}
-         d="flex"
-         spacing={2}
+         display="flex"
+         flexDirection="column"
+         position="relative"
       >
          <VStack
             w={{ base: '80%', md: '90%', lg: '100%' }}
-            h={{ base: '80%', md: '90%%', lg: '100%' }}
-            pb={8}
+            h="calc(100vh-3rem)"
+            pt="100px"
+            position="relative"
+            spacing={12}
          >
             <motion.h2
                initial={{ opacity: 0 }}
@@ -70,12 +69,6 @@ export default function Home() {
                   alt="picture of a male with a beard"
                   name="Navid M Ebrahimi"
                   borderRadius="3xl"
-                  //Changes Color Based on screen size
-                  // bgGradient={{
-                  //    lg: 'linear(to-t,  yellow.100,whiteAlpha.900, blue.400, )',
-                  //    md: 'linear(to-t, red.500, whiteAlpha.900, blue.500)',
-                  //    base: 'linear(to-t, red.500, whiteAlpha.900, blue.500)',
-                  // }}
                   size={{ base: '2x1', md: '2x1', lg: 'xl' }}
                />
             </Box>
@@ -87,6 +80,7 @@ export default function Home() {
                borderColor={'whiteAlpha.200'}
                borderWidth="2px"
                mb={3}
+               p={4}
                w={{ base: '80%', md: '90%', lg: '100%' }}
                h={{ base: '80%', md: '90%', lg: '100%' }}
                justifyContent="center"
