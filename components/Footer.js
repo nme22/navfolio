@@ -4,7 +4,7 @@ import { FaGithub, FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa';
 
 const PortFooter = () => {
    return (
-      <HStack position="sticky" mb={-50}>
+      <HStack position="sticky" mb={20}>
          <Link
             href="https://www.facebook.com/navid.ebrahimi.10/"
             target="_blank"

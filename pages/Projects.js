@@ -7,11 +7,9 @@ import {
    LinkBox,
    Text,
 } from '@chakra-ui/react';
-import { useColorModeValue } from '@chakra-ui/color-mode';
 import { motion } from 'framer-motion';
 
 const Projects = () => {
-   const bg = useColorModeValue('whiteAlpha.300', 'gray.700');
    return (
       // Box instead of DIV, same thing according to chakra docs
       // Display projects into a flexbox with a flex direction of column so that the projects line up neatly
@@ -19,7 +17,7 @@ const Projects = () => {
       // Come back and refactor the project divs into a resuseable component
       <>
          <Heading
-            m={2}
+            m={200}
             bgGradient="linear(to-r, whiteAlpha.900, blue.600 )"
             bgClip="text"
             fontSize="4xl"
@@ -34,13 +32,13 @@ const Projects = () => {
             w={{ base: '100%', md: '100%', lg: '100%' }}
             h={{ base: '85%', md: '100%', lg: '100%' }}
             maxW={{ base: '100%', md: '100%', lg: '100%' }}
-            maxH={{ base: '100%', md: '100%', lg: '100%' }}
+            maxH={{ base: '100%', md: '100%', lg: '85%' }}
             justifyContent="space-between"
             flexDir="row"
+            rowGap="50px"
             align="center"
             flexWrap="wrap"
-            mb={2}
-            pt={20}
+            p={5}
          >
             <motion.div
                whileHover={{

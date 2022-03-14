@@ -17,7 +17,7 @@ export default function Home() {
       >
          <VStack
             w={{ base: '80%', md: '90%', lg: '100%' }}
-            h="calc(100vh-3rem)"
+            h={{ base: '80%', md: '90%', lg: '100%' }}
             pt="100px"
             position="relative"
             spacing={12}
