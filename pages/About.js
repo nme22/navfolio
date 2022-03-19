@@ -110,7 +110,9 @@ export default function About() {
                   </AccordionButton>
 
                   <AccordionPanel pb={4} color={headingColor}>
-                     <h2> Zoroastrianism</h2>
+                     <h2>
+                        <u> Zoroastrianism</u>
+                     </h2>
                      - A monotheistic pre-Islamic religion of ancient Persia
                      founded by Zoroaster in the 6th century bc.
                      <br />
