@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 export default function Home() {
    const bg = useColorModeValue('whiteAlpha.900', 'gray.600');
    const color = useColorModeValue('gray.600', 'blue.200');
-   const headingColor = useColorModeValue('blue.400', 'gray.600');
+   const headingColor = useColorModeValue('whiteAlpha.900', 'blue.200');
    return (
       // Come back and refactor code so that certain elements dont just change color but the whole app does
       <Box
@@ -31,12 +31,6 @@ export default function Home() {
                   fontSize={{ base: '24px', md: '36px', lg: '48px' }}
                   fontStyle="oblique"
                   color={headingColor}
-                  bgGradient={{
-                     lg: 'linear(to-r, whiteAlpha.900,  whiteAlpha.900)',
-                     md: 'linear(to-r, red.500,  blue.500)',
-                     base: 'linear(to-r, red.500,  blue.500)',
-                  }}
-                  bgClip="text"
                >
                   Navid M Ebrahimi
                </Heading>
@@ -49,12 +43,7 @@ export default function Home() {
                <Heading
                   fontSize={{ base: '24px', md: '36px', lg: '48px' }}
                   fontStyle="oblique"
-                  bgGradient={{
-                     lg: 'linear(to-r, whiteAlpha.900,  whiteAlpha.900)',
-                     md: 'linear(to-r, red.500,  blue.500)',
-                     base: 'linear(to-r, red.500,  blue.500)',
-                  }}
-                  bgClip="text"
+                  color={headingColor}
                >
                   Full-Stack Junior Developer{' '}
                </Heading>

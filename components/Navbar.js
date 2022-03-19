@@ -15,14 +15,7 @@ const PortNavbar = () => {
 
    const color = useColorModeValue('whiteAlpha.900', 'blue.200');
    return (
-      <HStack
-         m={3}
-         mb={4}
-         p={3}
-         justifyContent="space-around"
-         w={{ base: '100%', md: '100%', lg: '100%' }}
-         mt={3}
-      >
+      <HStack m={3} mb={4} p={3} justifyContent="space-evenly" w="100%" mt={3}>
          <IconButton
             icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}
             isRound="true"
@@ -32,11 +25,10 @@ const PortNavbar = () => {
          />
 
          <Breadcrumb
-            spacing={{ base: '36px', md: ' 72px', lg: '144px' }}
+            spacing={{ base: '24px', md: ' 72px', lg: '120px' }}
             separator={<ChevronRightIcon color="gray.500" />}
-            fontSize="18px"
+            fontSize="16px"
          >
-            {' '}
             <BreadcrumbItem>
                <BreadcrumbLink href="/" color={color} fontWeight="extrabold">
                   Home
@@ -53,6 +45,15 @@ const PortNavbar = () => {
             </BreadcrumbItem>
             <BreadcrumbItem>
                <BreadcrumbLink
+                  href="/About"
+                  color={color}
+                  fontWeight="extrabold"
+               >
+                  About
+               </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+               <BreadcrumbLink
                   href="/Contact"
                   color={color}
                   fontWeight="extrabold"
@@ -60,9 +61,6 @@ const PortNavbar = () => {
                   Contact
                </BreadcrumbLink>
             </BreadcrumbItem>
-            {/* <Link href="/">Home</Link>
-        <Link href="/Projects">Projects</Link>
-        <Link href="/Contact">Contact</Link> */}
          </Breadcrumb>
       </HStack>
    );
