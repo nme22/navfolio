@@ -7,10 +7,12 @@ const theme = {
    styles: {
       global: {
          body: {
-            bgImage: './portfolio-background.png',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'none',
-            height: '150vh',
+            // bgImage: './portfolio-background.png',
+            // backgroundSize: 'cover',
+            // backgroundRepeat: 'none',
+            // height: '150vh',
+            background:
+               'radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(48,25,52,1) 100%)',
          },
       },
    },
