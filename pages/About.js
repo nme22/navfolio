@@ -2,6 +2,7 @@ import {
    Heading,
    Box,
    VStack,
+   Avatar,
    Accordion,
    AccordionItem,
    AccordionButton,
@@ -18,12 +19,14 @@ export default function About() {
          <Heading color={headingColor} size="2xl" p={4}>
             A little about Nav
          </Heading>
+         <br />
          <VStack
             p={4}
             borderColor="white"
             borderRadius="2xl"
             borderStyle="dashed"
             borderWidth="2px"
+            width="m"
             justifyContent="space-around"
          >
             <Accordion defaultIndex={[0]} allowMultiple maxW="contain">
@@ -90,7 +93,8 @@ export default function About() {
                      <br /> - HTML5, CSS3, JS6
                      <br />
                      <u> Frameworks</u>
-                     <br />- React.js, Node.js, Next.js
+                     <br />- React.js, Node.js, Next.js, Chakra-UI, Tailwind,
+                     Bootstrap
                      <br />
                      <u> Databases</u>
                      <br /> - MySQL, MongoDB, Supabase
