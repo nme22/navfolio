@@ -1,14 +1,22 @@
 import {
    Heading,
    Box,
+   Image,
    VStack,
-   Avatar,
+   HStack,
    Accordion,
    AccordionItem,
    AccordionButton,
    AccordionPanel,
    AccordionIcon,
 } from '@chakra-ui/react';
+import {
+   FaCode,
+   FaFutbol,
+   FaGamepad,
+   FaSnowboarding,
+   FaReact,
+} from 'react-icons/fa';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 
 export default function About() {
@@ -20,6 +28,7 @@ export default function About() {
             A little about Nav
          </Heading>
          <br />
+
          <VStack
             p={4}
             borderColor="white"
@@ -66,13 +75,15 @@ export default function About() {
                   </AccordionButton>
 
                   <AccordionPanel pb={4} color={headingColor}>
-                     -Practicing building things and watching coding videos
-                     <br />
-                     -Gaming with friends
-                     <br />
-                     -Playing Soccer and watching Soccer (MC fan)
-                     <br />
-                     -Snowboarding
+                     <HStack justifyContent="space-around" p={2}>
+                        <FaCode size={50} />
+                        <br />
+                        <FaGamepad size={50} />
+                        <br />
+                        <FaFutbol size={50} />
+                        <br />
+                        <FaSnowboarding size={50} />
+                     </HStack>
                   </AccordionPanel>
                </AccordionItem>
                <AccordionItem p={2}>
@@ -89,15 +100,47 @@ export default function About() {
                   </AccordionButton>
 
                   <AccordionPanel pb={4} color={headingColor}>
-                     <u> Languages</u>
-                     <br /> - HTML5, CSS3, JS6
+                     <Heading align="center" size="sm">
+                        Languages
+                     </Heading>
                      <br />
-                     <u> Frameworks</u>
-                     <br />- React.js, Node.js, Next.js, Chakra-UI, Tailwind,
-                     Bootstrap
+                     <HStack justifyContent="space-evenly">
+                        <Image src="/html.png" h={8} w={8} />
+                        <Image src="/css3.png" h={8} w={8} />
+                        <Image src="/javascript-logo.svg" height={8} w={8} />
+                     </HStack>
                      <br />
-                     <u> Databases</u>
-                     <br /> - MySQL, MongoDB, Supabase
+                     <Heading align="center" size="sm">
+                        Frameworks
+                     </Heading>
+                     <br />
+                     <HStack justifyContent="space-evenly">
+                        <FaReact size={32} />
+                        <Image src="/nodejs-icon.svg" h={8} w={8} />
+                        <Image
+                           src="/next-js.svg"
+                           h={8}
+                           w={8}
+                           bg="whiteAlpha.900"
+                           borderRadius="2xl"
+                        />
+                        <Image
+                           src="/chakraui.png"
+                           h={8}
+                           w={8}
+                           borderRadius="2xl"
+                        />
+                     </HStack>
+                     <br />
+                     <Heading align="center" size="sm">
+                        Databases
+                     </Heading>
+                     <br />
+                     <HStack justifyContent="space-evenly">
+                        <Image src="/MySQL-Logo.jpeg" h={8} w={8} />
+                        <Image src="/MongoDB.jpeg" h={8} w={8} />
+                        <Image src="/supabase.png" h={8} w={8} />
+                     </HStack>
                   </AccordionPanel>
                </AccordionItem>
                <AccordionItem p={2}>
@@ -129,6 +172,30 @@ export default function About() {
                      <br />- Practice being charitable, whether it be giving
                      money, food, council, or just a little bit of your time.
                      <br /> -Love your friends and die laughing
+                  </AccordionPanel>
+               </AccordionItem>
+               <AccordionItem p={2}>
+                  <AccordionButton
+                     _expanded={{
+                        bg: 'rebeccapurple',
+                        color: { headingColor },
+                     }}
+                  >
+                     <Box flex="1" textAlign="left" color={headingColor}>
+                        Music I Enjoy
+                     </Box>
+                     <AccordionIcon color={headingColor} />
+                  </AccordionButton>
+
+                  <AccordionPanel pb={4} color={headingColor}>
+                     <iframe
+                        src="https://open.spotify.com/embed/playlist/4bx5c78CAquCWNE4tw1reY?utm_source=generator"
+                        width="100%"
+                        height="380"
+                        frameBorder="0"
+                        allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                     ></iframe>
                   </AccordionPanel>
                </AccordionItem>
             </Accordion>
