@@ -105,9 +105,14 @@ export default function About() {
                      </Heading>
                      <br />
                      <HStack justifyContent="space-evenly">
-                        <Image src="/html.png" h={8} w={8} />
-                        <Image src="/css3.png" h={8} w={8} />
-                        <Image src="/javascript-logo.svg" height={8} w={8} />
+                        <Image src="/html.png" alt="html5" h={8} w={8} />
+                        <Image src="/css3.png" alt="CSS3" h={8} w={8} />
+                        <Image
+                           src="/javascript-logo.svg"
+                           alt="JavaScript version 6"
+                           height={8}
+                           w={8}
+                        />
                      </HStack>
                      <br />
                      <Heading align="center" size="sm">
@@ -116,9 +121,15 @@ export default function About() {
                      <br />
                      <HStack justifyContent="space-evenly">
                         <FaReact size={32} />
-                        <Image src="/nodejs-icon.svg" h={8} w={8} />
+                        <Image
+                           src="/nodejs-icon.svg"
+                           alt="node.js"
+                           h={8}
+                           w={8}
+                        />
                         <Image
                            src="/next-js.svg"
+                           alt="Next.js"
                            h={8}
                            w={8}
                            bg="whiteAlpha.900"
@@ -126,6 +137,7 @@ export default function About() {
                         />
                         <Image
                            src="/chakraui.png"
+                           alt="chakra-ui"
                            h={8}
                            w={8}
                            borderRadius="2xl"
@@ -137,9 +149,14 @@ export default function About() {
                      </Heading>
                      <br />
                      <HStack justifyContent="space-evenly">
-                        <Image src="/MySQL-Logo.jpeg" h={8} w={8} />
-                        <Image src="/MongoDB.jpeg" h={8} w={8} />
-                        <Image src="/supabase.png" h={8} w={8} />
+                        <Image
+                           src="/MySQL-Logo.jpeg"
+                           alt="My SQL"
+                           h={8}
+                           w={8}
+                        />
+                        <Image src="/MongoDB.jpeg" alt="MongoDB" h={8} w={8} />
+                        <Image src="/supabase.png" alt="Supabase" h={8} w={8} />
                      </HStack>
                   </AccordionPanel>
                </AccordionItem>
@@ -193,7 +210,7 @@ export default function About() {
                         width="100%"
                         height="380"
                         frameBorder="0"
-                        allowfullscreen=""
+                        allowFullscreen=""
                         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                      ></iframe>
                   </AccordionPanel>
