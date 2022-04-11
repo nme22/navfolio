@@ -1,7 +1,6 @@
 import {
    Heading,
    Box,
-   Image,
    VStack,
    HStack,
    Accordion,
@@ -11,13 +10,7 @@ import {
    AccordionIcon,
    Badge,
 } from '@chakra-ui/react';
-import {
-   FaCode,
-   FaFutbol,
-   FaGamepad,
-   FaSnowboarding,
-   FaReact,
-} from 'react-icons/fa';
+import { FaCode, FaFutbol, FaGamepad, FaSnowboarding } from 'react-icons/fa';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 
 export default function About() {
@@ -84,6 +77,7 @@ export default function About() {
                         <Badge colorScheme="messenger">MySQL</Badge>
                         <Badge colorScheme="green">MongoDB</Badge>
                         <Badge colorScheme="black">Supabase</Badge>
+                        <Badge colorScheme="red">Firebase</Badge>
                      </HStack>
                   </AccordionPanel>
                </AccordionItem>
