@@ -9,6 +9,7 @@ import {
    AccordionButton,
    AccordionPanel,
    AccordionIcon,
+   Badge,
 } from '@chakra-ui/react';
 import {
    FaCode,
@@ -33,12 +34,59 @@ export default function About() {
             p={4}
             borderColor="white"
             borderRadius="2xl"
-            borderStyle="dashed"
+            borderStyle="groove"
             borderWidth="2px"
-            width="m"
+            width="fit-content"
             justifyContent="space-around"
          >
             <Accordion defaultIndex={[0]} allowMultiple maxW="contain">
+               <AccordionItem p={2}>
+                  <AccordionButton
+                     _expanded={{
+                        bg: 'rebeccapurple',
+                        color: { headingColor },
+                     }}
+                  >
+                     <Box flex="1" textAlign="left" color={headingColor}>
+                        Technologies/Frameworks/Databases
+                     </Box>
+                     <AccordionIcon color={headingColor} />
+                  </AccordionButton>
+
+                  <AccordionPanel pb={4} color={headingColor}>
+                     <Heading align="center" size="sm">
+                        Languages
+                     </Heading>
+                     <br />
+                     <HStack justifyContent="center">
+                        <Badge colorScheme="blue">HTML5</Badge>
+                        <Badge colorScheme="green">CSS3</Badge>
+                        <Badge colorScheme="yellow">JAVASCRIPT v6</Badge>
+                     </HStack>
+                     <br />
+                     <Heading align="center" size="sm">
+                        Frameworks
+                     </Heading>
+                     <br />
+                     <HStack justifyContent="center">
+                        <Badge colorScheme="blue">REACT.JS</Badge>
+                        <Badge colorScheme="green">NODE.JS</Badge>
+                        <Badge colorScheme="black">NEXT.JS</Badge>
+                        <Badge colorScheme="cyan">CHAKRA UI</Badge>
+                        <Badge colorScheme="facebook">TAILWIND CSS </Badge>
+                     </HStack>
+                     <br />
+                     <Heading align="center" size="sm">
+                        Databases
+                     </Heading>
+                     <br />
+                     <HStack justifyContent="center">
+                        <Badge colorScheme="messenger">MySQL</Badge>
+                        <Badge colorScheme="green">MongoDB</Badge>
+                        <Badge colorScheme="black">Supabase</Badge>
+                     </HStack>
+                  </AccordionPanel>
+               </AccordionItem>
                <AccordionItem p={2}>
                   <AccordionButton
                      _expanded={{
@@ -86,80 +134,7 @@ export default function About() {
                      </HStack>
                   </AccordionPanel>
                </AccordionItem>
-               <AccordionItem p={2}>
-                  <AccordionButton
-                     _expanded={{
-                        bg: 'rebeccapurple',
-                        color: { headingColor },
-                     }}
-                  >
-                     <Box flex="1" textAlign="left" color={headingColor}>
-                        Technologies/Frameworks/Databases
-                     </Box>
-                     <AccordionIcon color={headingColor} />
-                  </AccordionButton>
 
-                  <AccordionPanel pb={4} color={headingColor}>
-                     <Heading align="center" size="sm">
-                        Languages
-                     </Heading>
-                     <br />
-                     <HStack justifyContent="space-evenly">
-                        <Image src="/html.png" alt="html5" h={8} w={8} />
-                        <Image src="/css3.png" alt="CSS3" h={8} w={8} />
-                        <Image
-                           src="/javascript-logo.svg"
-                           alt="JavaScript version 6"
-                           height={8}
-                           w={8}
-                        />
-                     </HStack>
-                     <br />
-                     <Heading align="center" size="sm">
-                        Frameworks
-                     </Heading>
-                     <br />
-                     <HStack justifyContent="space-evenly">
-                        <FaReact size={32} />
-                        <Image
-                           src="/nodejs-icon.svg"
-                           alt="node.js"
-                           h={8}
-                           w={8}
-                        />
-                        <Image
-                           src="/next-js.svg"
-                           alt="Next.js"
-                           h={8}
-                           w={8}
-                           bg="whiteAlpha.900"
-                           borderRadius="2xl"
-                        />
-                        <Image
-                           src="/chakraui.png"
-                           alt="chakra-ui"
-                           h={8}
-                           w={8}
-                           borderRadius="2xl"
-                        />
-                     </HStack>
-                     <br />
-                     <Heading align="center" size="sm">
-                        Databases
-                     </Heading>
-                     <br />
-                     <HStack justifyContent="space-evenly">
-                        <Image
-                           src="/MySQL-Logo.jpeg"
-                           alt="My SQL"
-                           h={8}
-                           w={8}
-                        />
-                        <Image src="/MongoDB.jpeg" alt="MongoDB" h={8} w={8} />
-                        <Image src="/supabase.png" alt="Supabase" h={8} w={8} />
-                     </HStack>
-                  </AccordionPanel>
-               </AccordionItem>
                <AccordionItem p={2}>
                   <AccordionButton
                      _expanded={{
