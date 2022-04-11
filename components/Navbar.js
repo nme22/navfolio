@@ -15,7 +15,14 @@ const PortNavbar = () => {
 
    const color = useColorModeValue('whiteAlpha.900', 'blue.200');
    return (
-      <HStack m={3} mb={4} p={3} justifyContent="space-evenly" w="100%" mt={3}>
+      <HStack
+         m={3}
+         mb={4}
+         p={3}
+         justifyContent="space-around"
+         w={{ base: '100%', md: '100%', lg: '100%' }}
+         mt={3}
+      >
          <IconButton
             icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}
             isRound="true"
@@ -25,9 +32,9 @@ const PortNavbar = () => {
          />
 
          <Breadcrumb
-            spacing={{ base: '24px', md: ' 72px', lg: '120px' }}
+            spacing={{ base: '24px', md: ' 80px', lg: '100px' }}
             separator={<ChevronRightIcon color="gray.500" />}
-            fontSize="16px"
+            fontSize={{ base: '8px', md: '12px', lg: '16px' }}
          >
             <BreadcrumbItem>
                <BreadcrumbLink href="/" color={color} fontWeight="extrabold">

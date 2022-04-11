@@ -28,7 +28,7 @@ export default function Home() {
                transition={{ duration: 3 }}
             >
                <Heading
-                  fontSize={{ base: '24px', md: '36px', lg: '48px' }}
+                  fontSize={{ base: '18px', md: '36px', lg: '48px' }}
                   fontStyle="oblique"
                   color={headingColor}
                >
@@ -41,7 +41,7 @@ export default function Home() {
                transition={{ duration: 4 }}
             >
                <Heading
-                  fontSize={{ base: '24px', md: '36px', lg: '48px' }}
+                  fontSize={{ base: '18px', md: '36px', lg: '48px' }}
                   fontStyle="oblique"
                   color={headingColor}
                >
@@ -70,12 +70,12 @@ export default function Home() {
                borderWidth="2px"
                mb={3}
                p={4}
-               w={{ base: '80%', md: '90%', lg: '100%' }}
-               h={{ base: '80%', md: '90%', lg: '100%' }}
+               w="fit-content"
+               h={{ base: '100%', md: '90%', lg: '100%' }}
                justifyContent="center"
             >
                <Text
-                  fontSize={{ base: '16px', md: '22px', lg: '26px' }}
+                  fontSize={{ base: '12px', md: '16px', lg: '16px' }}
                   fontStyle="oblique"
                   fontWeight="semibold"
                   color={color}
