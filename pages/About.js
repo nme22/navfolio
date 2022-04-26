@@ -62,6 +62,7 @@ export default function About() {
                      </Heading>
                      <br />
                      <HStack justifyContent="center">
+                        <Badge colorScheme="gray">Bootstrap</Badge>
                         <Badge colorScheme="blue">REACT.JS</Badge>
                         <Badge colorScheme="green">NODE.JS</Badge>
                         <Badge colorScheme="black">NEXT.JS</Badge>
@@ -78,6 +79,19 @@ export default function About() {
                         <Badge colorScheme="green">MongoDB</Badge>
                         <Badge colorScheme="black">Supabase</Badge>
                         <Badge colorScheme="red">Firebase</Badge>
+                     </HStack>
+                     <br />
+                     <Heading align="center" size="sm">
+                        MISC
+                     </Heading>
+                     <br />
+                     <HStack justifyContent="center">
+                        <Badge colorScheme="gray">Github</Badge>
+                        <Badge colorScheme="black">Git</Badge>
+                        <Badge colorScheme="teal">Netlify</Badge>
+                        <Badge colorScheme="gray">Vercel</Badge>
+                        <Badge colorScheme="purple">Heroku</Badge>
+                        <Badge colorScheme="purple">GraphQl</Badge>
                      </HStack>
                   </AccordionPanel>
                </AccordionItem>
@@ -179,7 +193,6 @@ export default function About() {
                         width="100%"
                         height="380"
                         frameBorder="0"
-                        allowFullscreen=""
                         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                      ></iframe>
                   </AccordionPanel>

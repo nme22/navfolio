@@ -2,10 +2,10 @@ import {
    Heading,
    Image,
    HStack,
-   Stack,
    LinkOverlay,
    LinkBox,
    Text,
+   Flex,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 
@@ -13,7 +13,6 @@ const Projects = () => {
    return (
       // Box instead of DIV, same thing according to chakra docs
       // Display projects into a flexbox with a flex direction of column so that the projects line up neatly
-      // Let the name of the project be a link to the deployed application or the github repo.
       // Come back and refactor the project divs into a resuseable component
       <>
          <Heading
@@ -28,32 +27,32 @@ const Projects = () => {
             {' '}
             Projects
          </Heading>
-         <Stack
+         <Flex
             w={{ base: '100%', md: '100%', lg: '100%' }}
             h={{ base: '85%', md: '100%', lg: '100%' }}
             maxW={{ base: '100%', md: '100%', lg: '100%' }}
             maxH={{ base: '100%', md: '100%', lg: '85%' }}
-            justifyContent="space-between"
+            justifyContent="space-around"
             flexDir="row"
-            rowGap="50px"
-            align="center"
+            rowGap="25px"
             flexWrap="wrap"
-            p={5}
+            p={1}
          >
             <motion.div
                whileHover={{
-                  opacity: 1,
-                  scale: 1.1,
+                  scale: 1.05,
                }}
             >
                <LinkBox
-                  as="article"
+                  as="div"
                   maxW="xs"
                   p="5"
                   borderWidth="1px"
                   borderColor="black"
                   bgGradient="linear(to-r, whiteAlpha.600, blue.600 )"
                   rounded="md"
+                  opacity={0.7}
+                  _hover={{ opacity: 1 }}
                >
                   <Heading size="md" my="8">
                      <LinkOverlay
@@ -103,17 +102,19 @@ const Projects = () => {
             <motion.div
                whileHover={{
                   opacity: 1,
-                  scale: 1.1,
+                  scale: 1.05,
                }}
             >
                <LinkBox
-                  as="article"
+                  as="div"
                   maxW="xs"
                   p="5"
                   borderWidth="1px"
                   borderColor="black"
                   bgGradient="linear(to-r, whiteAlpha.600, blue.600 )"
                   rounded="md"
+                  opacity={0.7}
+                  _hover={{ opacity: 1 }}
                >
                   <Heading size="md" my="8">
                      <LinkOverlay
@@ -149,17 +150,19 @@ const Projects = () => {
             <motion.div
                whileHover={{
                   opacity: 1,
-                  scale: 1.1,
+                  scale: 1.05,
                }}
             >
                <LinkBox
-                  as="article"
+                  as="div"
                   maxW="xs"
                   p="5"
                   borderWidth="1px"
                   borderColor="black"
                   bgGradient="linear(to-r, whiteAlpha.600, blue.600 )"
                   rounded="md"
+                  opacity={0.7}
+                  _hover={{ opacity: 1 }}
                >
                   <Heading size="md" my="8">
                      <LinkOverlay
@@ -195,17 +198,19 @@ const Projects = () => {
             <motion.div
                whileHover={{
                   opacity: 1,
-                  scale: 1.1,
+                  scale: 1.05,
                }}
             >
                <LinkBox
-                  as="article"
+                  as="div"
                   maxW="xs"
                   p="5"
                   borderWidth="1px"
                   borderColor="black"
                   bgGradient="linear(to-r, whiteAlpha.600, blue.600 )"
                   rounded="md"
+                  opacity={0.7}
+                  _hover={{ opacity: 1 }}
                >
                   <Heading size="md" my="8">
                      <LinkOverlay
@@ -248,17 +253,19 @@ const Projects = () => {
             <motion.div
                whileHover={{
                   opacity: 1,
-                  scale: 1.1,
+                  scale: 1.05,
                }}
             >
                <LinkBox
-                  as="article"
+                  as="div"
                   maxW="xs"
                   p="5"
                   borderWidth="1px"
                   borderColor="black"
                   bgGradient="linear(to-r, whiteAlpha.600, blue.600 )"
                   rounded="md"
+                  opacity={0.7}
+                  _hover={{ opacity: 1 }}
                >
                   <Heading size="md" my="8">
                      <LinkOverlay
@@ -290,7 +297,7 @@ const Projects = () => {
                   </Text>
                </LinkBox>
             </motion.div>
-         </Stack>
+         </Flex>
       </>
    );
 };
