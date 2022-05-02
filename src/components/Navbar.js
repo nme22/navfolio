@@ -18,7 +18,7 @@ const PortNavbar = () => {
       <HStack
          m={1}
          p={1}
-         justifyContent="space-evenly"
+         justifyContent="space-between"
          w={{ base: '100%', md: '100%', lg: '100%' }}
          mt={3}
       >
@@ -31,7 +31,6 @@ const PortNavbar = () => {
          />
 
          <Breadcrumb
-            spacing={{ base: '24px', md: ' 80px', lg: '120px' }}
             separator={<ChevronRightIcon color="gray.500" />}
             fontSize={{ base: '8px', md: '12px', lg: '16px' }}
          >

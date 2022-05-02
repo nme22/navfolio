@@ -1,4 +1,13 @@
-import { Container, Heading, Text, VStack, Box, Image } from '@chakra-ui/react';
+import {
+   Container,
+   Heading,
+   Text,
+   VStack,
+   Box,
+   Image,
+   Flex,
+   Spacer,
+} from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { motion } from 'framer-motion';
 
@@ -8,19 +17,17 @@ export default function Home() {
    const headingColor = useColorModeValue('whiteAlpha.900', 'blue.200');
    return (
       // Come back and refactor code so that certain elements dont just change color but the whole app does
-      <Box
-         w={{ base: '80%', md: '90%', lg: '100%' }}
-         h={{ base: '80%', md: '90%', lg: '100%' }}
-         display="flex"
+      <Flex
+         w={{ base: '80%', md: '100%', lg: '100%' }}
+         h={{ base: '80%', md: '100%', lg: '100%' }}
          flexDirection="column"
-         position="relative"
+         pt={8}
+         pl={6}
+         spacing={12}
       >
          <VStack
             w={{ base: '80%', md: '90%', lg: '100%' }}
             h={{ base: '80%', md: '90%', lg: '100%' }}
-            pt="100px"
-            position="relative"
-            spacing={12}
          >
             <motion.h2
                initial={{ opacity: 0 }}
@@ -28,7 +35,7 @@ export default function Home() {
                transition={{ duration: 3 }}
             >
                <Heading
-                  fontSize={{ base: '18px', md: '36px', lg: '48px' }}
+                  fontSize={{ base: '18px', md: '36px', lg: '36px' }}
                   fontStyle="oblique"
                   color={headingColor}
                >
@@ -41,11 +48,11 @@ export default function Home() {
                transition={{ duration: 4 }}
             >
                <Heading
-                  fontSize={{ base: '18px', md: '36px', lg: '48px' }}
+                  fontSize={{ base: '18px', md: '36px', lg: '36px' }}
                   fontStyle="oblique"
                   color={headingColor}
                >
-                  Full-Stack Junior Developer{' '}
+                  Full-Stack Developer
                </Heading>
             </motion.h2>
             <Box
@@ -90,6 +97,6 @@ export default function Home() {
                </Text>
             </Container>
          </VStack>
-      </Box>
+      </Flex>
    );
 }

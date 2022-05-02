@@ -7,7 +7,7 @@ import {
    Text,
    Flex,
 } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { motion, Reorder, useDragControls } from 'framer-motion';
 
 const Projects = () => {
    return (
