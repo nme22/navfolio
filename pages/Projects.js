@@ -7,7 +7,7 @@ import {
    Text,
    Flex,
 } from '@chakra-ui/react';
-import { motion, Reorder, useDragControls } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const Projects = () => {
    return (
@@ -27,6 +27,7 @@ const Projects = () => {
             {' '}
             Projects
          </Heading>
+
          <Flex
             w={{ base: '100%', md: '100%', lg: '100%' }}
             h={{ base: '85%', md: '100%', lg: '100%' }}

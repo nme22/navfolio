@@ -28,7 +28,12 @@ const PortNavbar = () => {
             size="sm"
             onClick={toggleColorMode}
             backgroundColor={color}
-         />
+            arial-label="Color Switch"
+            type="button"
+            as="button"
+         >
+            Switch
+         </IconButton>
 
          <Breadcrumb
             separator={<ChevronRightIcon color="gray.500" />}
