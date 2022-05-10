@@ -15,6 +15,13 @@ const Projects = () => {
       // Display projects into a flexbox with a flex direction of column so that the projects line up neatly
       // Come back and refactor the project divs into a resuseable component
       <>
+         <Head>
+            <title>Navs Portfolio Project Page</title>
+            <meta
+               name="description"
+               content="initial=scale=1.0, width=device-width"
+            />
+         </Head>
          <Heading
             m={200}
             bgGradient="linear(to-r, whiteAlpha.900, blue.600 )"

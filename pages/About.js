@@ -18,6 +18,13 @@ export default function About() {
 
    return (
       <>
+         <Head>
+            <title>Navs Portfolio About Page</title>
+            <meta
+               name="description"
+               content="initial=scale=1.0, width=device-width"
+            />
+         </Head>
          <Heading color={headingColor} size="2xl" p={4}>
             A little about Nav
          </Heading>
