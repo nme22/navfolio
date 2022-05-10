@@ -8,6 +8,7 @@ import {
    Flex,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import Head from 'next/head';
 
 const Projects = () => {
    return (

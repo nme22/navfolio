@@ -28,7 +28,7 @@ const PortNavbar = () => {
             size="sm"
             onClick={toggleColorMode}
             backgroundColor={color}
-            arial-label="Color Switch"
+            aria-label="Color Switch"
             as="button"
          >
             Switch

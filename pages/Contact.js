@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { motion } from 'framer-motion';
+import Head from 'next/head';
 
 const Contact = () => {
    const color = useColorModeValue('whiteAlpha.900', 'blue.300');

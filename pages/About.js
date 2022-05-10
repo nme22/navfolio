@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { FaCode, FaFutbol, FaGamepad, FaSnowboarding } from 'react-icons/fa';
 import { useColorModeValue } from '@chakra-ui/color-mode';
+import Head from 'next/head';
 
 export default function About() {
    const headingColor = useColorModeValue('whiteAlpha.900', 'blue.200');
