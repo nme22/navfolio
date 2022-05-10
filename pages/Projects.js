@@ -75,8 +75,8 @@ const Projects = () => {
                      <Image
                         src="/datingIMG.png"
                         alt="Heart"
-                        height={{ base: '40px', md: '36px', lg: '32px' }}
-                        width={{ base: '40px', md: '36px', lg: '32px' }}
+                        height={{ base: '32px', md: '36px', lg: '32px' }}
+                        width={{ base: '32px', md: '36px', lg: '32px' }}
                         borderRadius="50%"
                      />
                      <Image

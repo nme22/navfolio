@@ -24,7 +24,11 @@ const PortFooter = () => {
 
             <Link href="https://twitter.com/nme_22" target="_blank">
                <Tooltip label="Twitter" hasArrow arrowSize={15}>
-                  <Button colorScheme="twitter" leftIcon={<FaTwitter />}>
+                  <Button
+                     colorScheme="twitter"
+                     bg="twitter.800"
+                     leftIcon={<FaTwitter />}
+                  >
                      Twitter
                   </Button>
                </Tooltip>
@@ -42,7 +46,11 @@ const PortFooter = () => {
                target="_blank"
             >
                <Tooltip label="LinkedIn" hasArrow arrowSize={15}>
-                  <Button colorScheme="linkedin" leftIcon={<FaLinkedin />}>
+                  <Button
+                     colorScheme="linkedin"
+                     bg="linkedin.700"
+                     leftIcon={<FaLinkedin />}
+                  >
                      LinkedIn
                   </Button>
                </Tooltip>
