@@ -24,7 +24,7 @@ export default function Hero() {
             {/* beach backdrop framing the portrait */}
             <div
                style={{ backgroundImage: "url('/beach-quotes.jpeg')" }}
-               className="rounded-2xl bg-cover bg-center p-3 shadow-xl shadow-black/40 ring-1 ring-white/10"
+               className="overflow-hidden rounded-2xl bg-cover bg-center px-3 pt-3 shadow-xl shadow-black/40 ring-1 ring-white/10"
             >
                <Image
                   src="/youngshwap.png"
@@ -32,7 +32,7 @@ export default function Hero() {
                   width={612}
                   height={408}
                   priority
-                  className="h-auto w-64 rounded-xl object-contain sm:w-80"
+                  className="block h-auto w-64 rounded-t-xl object-contain sm:w-80"
                />
             </div>
          </motion.div>
