@@ -10,16 +10,10 @@ export default function Hero() {
          id="home"
          className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-5xl flex-col items-center justify-center gap-8 px-6 py-20 text-center"
       >
-         {/* full-bleed beach backdrop */}
+         {/* soft accent glow behind the hero */}
          <div
             aria-hidden
-            style={{ backgroundImage: "url('/beach-quotes.jpeg')" }}
-            className="pointer-events-none absolute left-1/2 top-0 -z-20 h-full w-screen -translate-x-1/2 bg-cover bg-center"
-         />
-         {/* dark overlay: keeps text readable and blends into the page below */}
-         <div
-            aria-hidden
-            className="pointer-events-none absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-gradient-to-b from-zinc-950/80 via-zinc-950/75 to-zinc-950"
+            className="pointer-events-none absolute left-1/2 top-1/3 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-indigo-500/20 blur-[120px]"
          />
 
          <motion.div
@@ -27,14 +21,20 @@ export default function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
          >
-            <Image
-               src="/youngshwap.png"
-               alt="Portrait of Navid M. Ebrahimi"
-               width={612}
-               height={408}
-               priority
-               className="h-auto w-64 rounded-2xl object-contain ring-2 ring-white/10 sm:w-80"
-            />
+            {/* beach backdrop framing the portrait */}
+            <div
+               style={{ backgroundImage: "url('/beach-quotes.jpeg')" }}
+               className="rounded-2xl bg-cover bg-center p-3 shadow-xl shadow-black/40 ring-1 ring-white/10"
+            >
+               <Image
+                  src="/youngshwap.png"
+                  alt="Portrait of Navid M. Ebrahimi"
+                  width={612}
+                  height={408}
+                  priority
+                  className="h-auto w-64 rounded-xl object-contain sm:w-80"
+               />
+            </div>
          </motion.div>
 
          <motion.div

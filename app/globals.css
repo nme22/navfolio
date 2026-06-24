@@ -15,8 +15,6 @@ body {
    background-color: #09090b;
    color: #d4d4d8;
    -webkit-font-smoothing: antialiased;
-   /* contain full-bleed (w-screen) layers like the hero backdrop */
-   overflow-x: hidden;
 }
 
 /* Reusable gradient text accent */
