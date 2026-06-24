@@ -10,10 +10,16 @@ export default function Hero() {
          id="home"
          className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-5xl flex-col items-center justify-center gap-8 px-6 py-20 text-center"
       >
-         {/* soft accent glow behind the hero */}
+         {/* full-bleed beach backdrop */}
          <div
             aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/3 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-indigo-500/20 blur-[120px]"
+            style={{ backgroundImage: "url('/beach-quotes.jpeg')" }}
+            className="pointer-events-none absolute left-1/2 top-0 -z-20 h-full w-screen -translate-x-1/2 bg-cover bg-center"
+         />
+         {/* dark overlay: keeps text readable and blends into the page below */}
+         <div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-gradient-to-b from-zinc-950/80 via-zinc-950/75 to-zinc-950"
          />
 
          <motion.div
