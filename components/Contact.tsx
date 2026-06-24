@@ -1,5 +1,5 @@
 import Section from '@/components/Section';
-import { email } from '@/lib/data';
+import { siteConfig } from '@/lib/site';
 
 export default function Contact() {
    return (
@@ -13,7 +13,7 @@ export default function Contact() {
             open.
          </p>
          <a
-            href={`mailto:${email}`}
+            href={`mailto:${siteConfig.email}`}
             className="inline-block rounded-full bg-gradient-to-r from-indigo-400 to-sky-400 px-7 py-3 text-sm font-semibold text-zinc-950 transition-transform hover:scale-105"
          >
             Reach Out

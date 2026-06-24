@@ -1,10 +1,21 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
+
+interface SectionProps {
+   id?: string;
+   className?: string;
+   children: ReactNode;
+}
 
 // Shared section wrapper: consistent width/spacing, a scroll anchor (id),
 // and a subtle fade/slide-up reveal as it enters the viewport.
-export default function Section({ id, className = '', children }) {
+export default function Section({
+   id,
+   className = '',
+   children,
+}: SectionProps) {
    return (
       <motion.section
          id={id}

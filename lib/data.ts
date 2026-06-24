@@ -1,3 +1,12 @@
+import type {
+   NavLink,
+   Project,
+   SkillGroups,
+   Hobby,
+   StoryBlock,
+   Social,
+} from './types';
+
 // All site content as data, so components stay presentational.
 
 export const intro = `First-generation Iranian web developer. From learning HTML5,
@@ -5,8 +14,8 @@ CSS, and basic JavaScript to building full applications with modern frameworks, 
 love taking ideas from start to finish. Check out my projects on GitHub and reach
 out if you'd like to collaborate.`;
 
-// `color` keys map to themed hover styles in components/About.js.
-export const skills = {
+// `color` keys map to themed hover styles in components/About.tsx.
+export const skills: SkillGroups = {
    Languages: [
       { name: 'HTML5', color: 'orange' },
       { name: 'CSS3', color: 'blue' },
@@ -36,14 +45,14 @@ export const skills = {
    ],
 };
 
-export const hobbies = [
+export const hobbies: Hobby[] = [
    { icon: 'code', label: 'Coding', color: 'indigo' },
    { icon: 'gamepad', label: 'Gaming', color: 'violet' },
    { icon: 'futbol', label: 'Soccer', color: 'green' },
    { icon: 'snowboarding', label: 'Snowboarding', color: 'sky' },
 ];
 
-export const story = [
+export const story: StoryBlock[] = [
    {
       title: 'Origins',
       body: `Born in Queens, New York and raised in Sicklerville, New Jersey. My
@@ -57,7 +66,7 @@ of your time. Love your friends and die laughing.`,
    },
 ];
 
-export const projects = [
+export const projects: Project[] = [
    {
       title: 'DateNight',
       href: 'https://github.com/nme22/dateNight',
@@ -104,8 +113,7 @@ export const projects = [
    {
       title: "Ezzat's Kitchen",
       href: 'https://ezzatskitchen.vercel.app/',
-      description:
-         'A Next.js app designed to bring Persian food to your door.',
+      description: 'A Next.js app designed to bring Persian food to your door.',
       inProgress: true,
       tech: [
          { src: '/vercellogo.png', alt: 'Vercel' },
@@ -117,24 +125,14 @@ export const projects = [
 export const spotifyPlaylist =
    'https://open.spotify.com/embed/playlist/4bx5c78CAquCWNE4tw1reY?utm_source=generator';
 
-export const email = 'navidmebrahimi22@gmail.com';
-
-export const socials = [
-   {
-      label: 'GitHub',
-      href: 'https://github.com/nme22',
-      icon: 'github',
-   },
+export const socials: Social[] = [
+   { label: 'GitHub', href: 'https://github.com/nme22', icon: 'github' },
    {
       label: 'LinkedIn',
       href: 'https://www.linkedin.com/in/navid-ebrahimi-70b983204',
       icon: 'linkedin',
    },
-   {
-      label: 'Twitter',
-      href: 'https://twitter.com/nme_22',
-      icon: 'twitter',
-   },
+   { label: 'Twitter', href: 'https://twitter.com/nme_22', icon: 'twitter' },
    {
       label: 'Facebook',
       href: 'https://www.facebook.com/navid.ebrahimi.10/',
@@ -142,7 +140,7 @@ export const socials = [
    },
 ];
 
-export const navLinks = [
+export const navLinks: NavLink[] = [
    { label: 'Home', href: '#home' },
    { label: 'Projects', href: '#projects' },
    { label: 'About', href: '#about' },

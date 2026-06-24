@@ -1,7 +1,12 @@
 import Image from 'next/image';
 import { FiArrowUpRight } from 'react-icons/fi';
+import type { Project } from '@/lib/types';
 
-export default function ProjectCard({ project }) {
+interface ProjectCardProps {
+   project: Project;
+}
+
+export default function ProjectCard({ project }: ProjectCardProps) {
    return (
       <a
          href={project.href}

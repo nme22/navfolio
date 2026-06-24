@@ -1,34 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Navfolio
 
-## Getting Started
+Personal portfolio of **Navid M. Ebrahimi** — a single-page site built with
+Next.js and Tailwind CSS, with a modern, refined dark theme.
 
-First, run the development server:
+## Tech stack
+
+| Concern   | Choice                                                            |
+| --------- | ----------------------------------------------------------------- |
+| Framework | [Next.js 15](https://nextjs.org) (App Router)                     |
+| Language  | TypeScript (strict)                                               |
+| Styling   | [Tailwind CSS v4](https://tailwindcss.com)                        |
+| Animation | [Framer Motion](https://www.framer.com/motion/)                   |
+| Icons     | [react-icons](https://react-icons.github.io/react-icons/)         |
+| Tooling   | ESLint (flat config), Prettier, EditorConfig, Husky + lint-staged |
+| CI        | GitHub Actions (typecheck · lint · format · build)                |
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
+npm install      # installs deps and sets up git hooks (husky)
+npm run dev      # start the dev server at http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+| Script                 | Description                       |
+| ---------------------- | --------------------------------- |
+| `npm run dev`          | Start the dev server              |
+| `npm run build`        | Production build                  |
+| `npm start`            | Serve the production build        |
+| `npm run lint`         | Lint with ESLint                  |
+| `npm run typecheck`    | Type-check with `tsc --noEmit`    |
+| `npm run format`       | Format the codebase with Prettier |
+| `npm run format:check` | Verify formatting (used in CI)    |
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Project structure
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+app/
+  layout.tsx       Root layout: fonts, metadata, JSON-LD structured data
+  page.tsx         The single page — composes every section
+  globals.css      Tailwind import + theme tokens
+  sitemap.ts       Generated sitemap
+  robots.ts        Generated robots.txt
+components/         Presentational section/UI components
+lib/
+  data.ts          Site content (projects, skills, hobbies, socials …)
+  site.ts          Site-level config (name, url, email) — single source of truth
+  types.ts         Shared TypeScript models
+```
 
-## Learn More
+Content lives as typed data in `lib/`, keeping components purely presentational
+and the site easy to update without touching markup.
 
-To learn more about Next.js, take a look at the following resources:
+## Conventions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Strict TypeScript** with shared models in `lib/types.ts`.
+- **Content as data:** sections render from typed arrays/objects in `lib/data.ts`.
+- **Tailwind hover colors** are stored as semantic keys and mapped to full,
+  static class strings so they survive Tailwind v4's purge.
+- **Pre-commit:** Husky runs lint-staged (ESLint `--fix` + Prettier) on staged
+  files.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Optimized for [Vercel](https://vercel.com). Push to the default branch and import
+the repo, or run `npm run build && npm start`. Update `siteConfig.url` in
+`lib/site.ts` to your production domain so metadata, sitemap, and robots resolve
+correctly.
