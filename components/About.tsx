@@ -1,7 +1,7 @@
 import type { IconType } from 'react-icons';
 import { FaCode, FaGamepad, FaFutbol, FaSnowboarding } from 'react-icons/fa';
 import Section from '@/components/Section';
-import { skills, story, hobbies, spotifyPlaylist } from '@/lib/data';
+import { intro, skills, story, hobbies, spotifyPlaylist } from '@/lib/data';
 import type { AccentColor, HobbyIcon } from '@/lib/types';
 
 const hobbyIcons: Record<HobbyIcon, IconType> = {
@@ -40,9 +40,13 @@ const colorStyles: Record<AccentColor, string> = {
 export default function About() {
    return (
       <Section id="about">
-         <h2 className="mb-10 text-3xl font-bold tracking-tight text-zinc-50">
+         <h2 className="mb-6 text-3xl font-bold tracking-tight text-zinc-50">
             <span className="text-gradient">About</span>
          </h2>
+
+         <p className="mb-10 max-w-3xl text-base leading-relaxed text-zinc-400">
+            {intro}
+         </p>
 
          <div className="grid gap-10 md:grid-cols-2">
             {/* Skills */}

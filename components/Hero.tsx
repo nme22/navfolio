@@ -1,8 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { intro } from '@/lib/data';
+import VisitedMap from '@/components/VisitedMap';
+import { visitedCountries } from '@/lib/data';
 
 export default function Hero() {
    return (
@@ -17,31 +17,10 @@ export default function Hero() {
          />
 
          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
-         >
-            {/* beach backdrop framing the portrait */}
-            <div
-               style={{ backgroundImage: "url('/beach-quotes.jpeg')" }}
-               className="overflow-hidden rounded-2xl bg-cover bg-center px-3 pt-3 shadow-xl shadow-black/40 ring-1 ring-white/10"
-            >
-               <Image
-                  src="/youngshwap.png"
-                  alt="Portrait of Navid M. Ebrahimi"
-                  width={612}
-                  height={408}
-                  priority
-                  className="block h-auto w-64 rounded-t-xl object-contain sm:w-80"
-               />
-            </div>
-         </motion.div>
-
-         <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
-            className="flex flex-col items-center gap-4"
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+            className="flex flex-col items-center gap-3"
          >
             <h1 className="text-4xl font-bold tracking-tight text-zinc-50 sm:text-6xl">
                Navid M. Ebrahimi
@@ -49,25 +28,35 @@ export default function Hero() {
             <p className="text-lg font-medium sm:text-2xl">
                <span className="text-gradient">Full-Stack Developer</span>
             </p>
-            <p className="max-w-2xl text-balance text-base leading-relaxed text-zinc-400">
-               {intro}
-            </p>
-
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-               <a
-                  href="#projects"
-                  className="rounded-full bg-gradient-to-r from-indigo-400 to-sky-400 px-6 py-2.5 text-sm font-semibold text-zinc-950 transition-transform hover:scale-105"
-               >
-                  View Projects
-               </a>
-               <a
-                  href="#contact"
-                  className="rounded-full border border-white/15 px-6 py-2.5 text-sm font-semibold text-zinc-200 transition-colors hover:bg-white/5"
-               >
-                  Get in Touch
-               </a>
-            </div>
          </motion.div>
+
+         <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
+            className="w-full"
+         >
+            <VisitedMap />
+            <p className="mt-3 text-sm text-zinc-500">
+               <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full bg-indigo-500 align-middle" />
+               Places I&apos;ve been — {visitedCountries.length} countries
+            </p>
+         </motion.div>
+
+         <div className="flex flex-wrap items-center justify-center gap-3">
+            <a
+               href="#projects"
+               className="rounded-full bg-gradient-to-r from-indigo-400 to-sky-400 px-6 py-2.5 text-sm font-semibold text-zinc-950 transition-transform hover:scale-105"
+            >
+               View Projects
+            </a>
+            <a
+               href="#contact"
+               className="rounded-full border border-white/15 px-6 py-2.5 text-sm font-semibold text-zinc-200 transition-colors hover:bg-white/5"
+            >
+               Get in Touch
+            </a>
+         </div>
       </section>
    );
 }

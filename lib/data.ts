@@ -122,6 +122,21 @@ export const projects: Project[] = [
    },
 ];
 
+// Country names exactly as they appear in public/world-110m.json so the map
+// can match them directly. Add to this list as you travel.
+export const visitedCountries: string[] = [
+   'United States of America',
+   'Canada',
+   'Mexico',
+   'Spain',
+   'Portugal',
+   'Kuwait',
+   'United Arab Emirates',
+   'Iran',
+   'Georgia',
+   'Dominican Rep.',
+];
+
 export const spotifyPlaylist =
    'https://open.spotify.com/embed/playlist/4bx5c78CAquCWNE4tw1reY?utm_source=generator';
 
