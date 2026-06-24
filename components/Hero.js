@@ -24,10 +24,10 @@ export default function Hero() {
             <Image
                src="/youngshwap.png"
                alt="Portrait of Navid M. Ebrahimi"
-               width={160}
-               height={160}
+               width={612}
+               height={408}
                priority
-               className="h-40 w-40 rounded-full object-cover ring-2 ring-white/10"
+               className="h-auto w-64 rounded-2xl object-contain ring-2 ring-white/10 sm:w-80"
             />
          </motion.div>
 
