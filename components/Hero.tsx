@@ -38,8 +38,8 @@ export default function Hero() {
                transition={{ duration: 0.8, delay: 0.25 }}
                className="max-w-md text-sm text-zinc-400 sm:text-base"
             >
-               Mapping where I&apos;ve been — {visitedCountries.length}{' '}
-               countries and counting.
+               A map of the places I&apos;ve been so far. That&apos;s{' '}
+               {visitedCountries.length} countries.
             </motion.p>
 
             <div className="mt-2 w-full">

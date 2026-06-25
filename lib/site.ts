@@ -6,9 +6,9 @@
  */
 export const siteConfig = {
    name: 'Navid M. Ebrahimi',
-   title: 'Navid M. Ebrahimi — Full-Stack Developer',
+   title: 'Navid M. Ebrahimi, Full-Stack Developer',
    description:
-      'Portfolio of Navid M. Ebrahimi, a full-stack web developer. Projects, skills, and contact.',
+      'The personal site and portfolio of Navid M. Ebrahimi, a full-stack web developer based in the US.',
    url: 'https://navidebrahimi.dev',
    email: 'navidmebrahimi22@gmail.com',
    jobTitle: 'Full-Stack Developer',

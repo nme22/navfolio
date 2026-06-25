@@ -9,10 +9,11 @@ import type {
 
 // All site content as data, so components stay presentational.
 
-export const intro = `First-generation Iranian web developer. From learning HTML5,
-CSS, and basic JavaScript to building full applications with modern frameworks, I
-love taking ideas from start to finish. Check out my projects on GitHub and reach
-out if you'd like to collaborate.`;
+export const intro = `I'm a first-generation Iranian web developer. I started out with some
+HTML, CSS, and JavaScript and got hooked pretty fast. These days I build full apps
+with modern frameworks and I really like taking an idea all the way from a blank
+file to something people can actually use. My projects are up on GitHub, so take a
+look around, and if you want to build something together just reach out.`;
 
 // `color` keys map to themed hover styles in components/About.tsx.
 export const skills: SkillGroups = {
@@ -55,14 +56,14 @@ export const hobbies: Hobby[] = [
 export const story: StoryBlock[] = [
    {
       title: 'Origins',
-      body: `Born in Queens, New York and raised in Sicklerville, New Jersey. My
-family lineage traces back to ancient Persia — modern-day Iran.`,
+      body: `I was born in Queens, New York and grew up in Sicklerville, New Jersey.
+My family is from Iran, going all the way back to ancient Persia.`,
    },
    {
       title: 'Values',
-      body: `Treat others how you'd want to be treated. Be kind — the world is harsh
-enough as is. Practice generosity, whether with money, food, counsel, or a little
-of your time. Love your friends and die laughing.`,
+      body: `Treat people the way you'd want to be treated. Be kind, because the world
+is harsh enough as it is. Give what you can, whether that's money, food, advice, or
+just a bit of your time. Love your friends and die laughing.`,
    },
 ];
 
@@ -71,7 +72,7 @@ export const projects: Project[] = [
       title: 'DateNight',
       href: 'https://github.com/nme22/dateNight',
       description:
-         'A dating app to keep your romantic life from getting stale — record the dates you go on, leave notes, and remember the good times.',
+         'A dating app for couples who want to keep things fresh. Log the dates you go on, jot down notes, and look back on the good times later.',
       tech: [
          { src: '/datingIMG.png', alt: 'DateNight' },
          { src: '/chakraui.png', alt: 'Chakra UI' },
@@ -83,7 +84,7 @@ export const projects: Project[] = [
       title: 'README Generator',
       href: 'https://github.com/nme22/README-Generator',
       description:
-         'Creates a professional README in minutes. Fork the app, install dependencies, and run it to generate yours.',
+         'Spin up a solid README in a couple of minutes. Fork it, install the dependencies, and run it to build your own.',
       tech: [
          { src: '/javascript-logo.svg', alt: 'JavaScript' },
          { src: '/nodejs-icon.svg', alt: 'Node.js' },
@@ -93,7 +94,7 @@ export const projects: Project[] = [
       title: 'Todo List App',
       href: 'https://todolist-nme.vercel.app/',
       description:
-         'A to-do list built with Next.js and Chakra UI. Add or remove tasks and come back anytime — your todos are saved in local storage.',
+         'A to-do list built with Next.js and Chakra UI. Add or remove tasks, and everything stays saved in local storage so it is still there when you come back.',
       tech: [
          { src: '/next-js.svg', alt: 'Next.js' },
          { src: '/chakraui.png', alt: 'Chakra UI' },
@@ -103,7 +104,7 @@ export const projects: Project[] = [
       title: 'GitHub Search',
       href: 'https://githubsearch-eta.vercel.app/',
       description:
-         'Search GitHub users, pull their data from your query, and browse a paginated list of results.',
+         'Search for GitHub users and page through the results, with each user pulled straight from the GitHub API.',
       tech: [
          { src: '/next-js.svg', alt: 'Next.js' },
          { src: '/vercellogo.png', alt: 'Vercel' },
@@ -113,7 +114,8 @@ export const projects: Project[] = [
    {
       title: "Ezzat's Kitchen",
       href: 'https://ezzatskitchen.vercel.app/',
-      description: 'A Next.js app designed to bring Persian food to your door.',
+      description:
+         'A Next.js app for getting Persian food delivered to your door.',
       inProgress: true,
       tech: [
          { src: '/vercellogo.png', alt: 'Vercel' },

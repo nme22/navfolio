@@ -9,7 +9,7 @@ export default function Projects() {
             <span className="text-gradient">Projects</span>
          </h2>
          <p className="mb-10 max-w-2xl text-zinc-400">
-            A selection of things I&apos;ve built. Click any card to view it.
+            Some of the things I&apos;ve built. Click a card to check it out.
          </p>
          <div className="grid gap-5 sm:grid-cols-2">
             {projects.map((project) => (

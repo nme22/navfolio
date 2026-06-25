@@ -5,12 +5,11 @@ export default function Contact() {
    return (
       <Section id="contact" className="text-center">
          <h2 className="mb-4 text-3xl font-bold tracking-tight text-zinc-50">
-            <span className="text-gradient">Let&apos;s connect</span>
+            <span className="text-gradient">Let&apos;s talk</span>
          </h2>
          <p className="mx-auto mb-8 max-w-xl text-zinc-400">
-            Thanks for taking the time to look through my work. If you have a
-            question, an idea, or just want to say hello, my inbox is always
-            open.
+            Thanks for checking out my work. If you have a question, an idea, or
+            you just want to say hi, my inbox is always open.
          </p>
          <a
             href={`mailto:${siteConfig.email}`}
