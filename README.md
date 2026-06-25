@@ -1,8 +1,5 @@
 # Navfolio
 
-Personal portfolio of **Nav Ebrahimi** a single-page site built with
-Next.js and Tailwind CSS, with a modern, refined dark theme.
-
 ## Tech stack
 
 | Concern   | Choice                                                            |
