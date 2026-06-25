@@ -36,6 +36,7 @@ interface Tooltip {
 
 export default function VisitedMap() {
    const [countries, setCountries] = useState<CountryFeature[]>([]);
+   const [loading, setLoading] = useState(true);
    const [tooltip, setTooltip] = useState<Tooltip | null>(null);
 
    useEffect(() => {
@@ -52,6 +53,9 @@ export default function VisitedMap() {
          })
          .catch(() => {
             /* leave the map empty if the data can't be loaded */
+         })
+         .finally(() => {
+            if (active) setLoading(false);
          });
       return () => {
          active = false;
@@ -64,41 +68,56 @@ export default function VisitedMap() {
    const path = geoPath(projection);
 
    return (
-      <div className="relative w-full">
-         <svg
-            viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-            className="h-auto w-full"
-            role="img"
-            aria-label="World map highlighting the countries I've visited"
-         >
-            <g>
-               {countries.map((geo, index) => {
-                  const name = geo.properties?.name ?? '';
-                  const visited = visitedSet.has(name.toLowerCase());
-                  return (
-                     <path
-                        key={index}
-                        d={path(geo) ?? undefined}
-                        strokeWidth={0.5}
-                        className={
-                           visited
-                              ? 'fill-indigo-500 stroke-zinc-950 transition-colors duration-150 hover:fill-indigo-400'
-                              : 'fill-zinc-800 stroke-zinc-950 transition-colors duration-150 hover:fill-zinc-700'
-                        }
-                        onMouseMove={(event) =>
-                           setTooltip({
-                              label: prettyName(name),
-                              visited,
-                              x: event.clientX,
-                              y: event.clientY,
-                           })
-                        }
-                        onMouseLeave={() => setTooltip(null)}
-                     />
-                  );
-               })}
-            </g>
-         </svg>
+      <div className="galaxy-bg relative w-full overflow-hidden rounded-2xl border border-white/10 p-2 shadow-2xl shadow-indigo-950/40 sm:p-4">
+         {/* twinkling starfield */}
+         <div
+            aria-hidden
+            className="galaxy-stars pointer-events-none absolute inset-0"
+         />
+
+         <div className="relative aspect-[40/21] w-full">
+            {loading && (
+               <div className="absolute inset-0 z-10 flex items-center justify-center gap-3 text-sm text-zinc-400">
+                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/20 border-t-indigo-400" />
+                  Loading map…
+               </div>
+            )}
+
+            <svg
+               viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+               className="absolute inset-0 h-full w-full"
+               role="img"
+               aria-label="World map highlighting the countries I've visited"
+            >
+               <g>
+                  {countries.map((geo, index) => {
+                     const name = geo.properties?.name ?? '';
+                     const visited = visitedSet.has(name.toLowerCase());
+                     return (
+                        <path
+                           key={index}
+                           d={path(geo) ?? undefined}
+                           strokeWidth={0.5}
+                           className={
+                              visited
+                                 ? 'fill-indigo-500 stroke-zinc-950 transition-colors duration-150 hover:fill-indigo-400'
+                                 : 'fill-zinc-800/90 stroke-zinc-950 transition-colors duration-150 hover:fill-zinc-700'
+                           }
+                           onMouseMove={(event) =>
+                              setTooltip({
+                                 label: prettyName(name),
+                                 visited,
+                                 x: event.clientX,
+                                 y: event.clientY,
+                              })
+                           }
+                           onMouseLeave={() => setTooltip(null)}
+                        />
+                     );
+                  })}
+               </g>
+            </svg>
+         </div>
 
          {tooltip && (
             <div
