@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import SpaceBackground from '@/components/SpaceBackground';
 import VisitedMap from '@/components/VisitedMap';
 import { visitedCountries } from '@/lib/data';
 
@@ -8,55 +9,64 @@ export default function Hero() {
    return (
       <section
          id="home"
-         className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-5xl flex-col items-center justify-center gap-8 px-6 py-20 text-center"
+         className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden"
       >
-         {/* soft accent glow behind the hero */}
+         <SpaceBackground />
+
+         <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center gap-5 px-6 pt-24 text-center">
+            <motion.p
+               initial={{ opacity: 0, y: 10 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.6 }}
+               className="text-xs font-medium uppercase tracking-[0.3em] text-indigo-300/80"
+            >
+               Full-Stack Developer
+            </motion.p>
+
+            <motion.h1
+               initial={{ opacity: 0, y: 16 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.7, delay: 0.1 }}
+               className="bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl"
+            >
+               Navid M. Ebrahimi
+            </motion.h1>
+
+            <motion.p
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               transition={{ duration: 0.8, delay: 0.25 }}
+               className="max-w-md text-sm text-zinc-400 sm:text-base"
+            >
+               Mapping where I&apos;ve been — {visitedCountries.length}{' '}
+               countries and counting.
+            </motion.p>
+
+            <div className="mt-2 w-full">
+               <VisitedMap />
+            </div>
+
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+               <a
+                  href="#projects"
+                  className="rounded-full bg-gradient-to-r from-indigo-400 to-sky-400 px-6 py-2.5 text-sm font-semibold text-zinc-950 transition-transform hover:scale-105"
+               >
+                  View Projects
+               </a>
+               <a
+                  href="#contact"
+                  className="rounded-full border border-white/15 px-6 py-2.5 text-sm font-semibold text-zinc-200 transition-colors hover:bg-white/5"
+               >
+                  Get in Touch
+               </a>
+            </div>
+         </div>
+
+         {/* blend the space scene into the page below */}
          <div
             aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/3 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-indigo-500/20 blur-[120px]"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-b from-transparent to-zinc-950"
          />
-
-         <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
-            className="flex flex-col items-center gap-3"
-         >
-            <h1 className="text-4xl font-bold tracking-tight text-zinc-50 sm:text-6xl">
-               Navid M. Ebrahimi
-            </h1>
-            <p className="text-lg font-medium sm:text-2xl">
-               <span className="text-gradient">Full-Stack Developer</span>
-            </p>
-         </motion.div>
-
-         <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
-            className="w-full"
-         >
-            <VisitedMap />
-            <p className="mt-3 text-sm text-zinc-500">
-               <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full bg-indigo-500 align-middle" />
-               Places I&apos;ve been — {visitedCountries.length} countries
-            </p>
-         </motion.div>
-
-         <div className="flex flex-wrap items-center justify-center gap-3">
-            <a
-               href="#projects"
-               className="rounded-full bg-gradient-to-r from-indigo-400 to-sky-400 px-6 py-2.5 text-sm font-semibold text-zinc-950 transition-transform hover:scale-105"
-            >
-               View Projects
-            </a>
-            <a
-               href="#contact"
-               className="rounded-full border border-white/15 px-6 py-2.5 text-sm font-semibold text-zinc-200 transition-colors hover:bg-white/5"
-            >
-               Get in Touch
-            </a>
-         </div>
       </section>
    );
 }
