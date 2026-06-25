@@ -1,0 +1,155 @@
+@import 'tailwindcss';
+
+@theme {
+   --color-accent: #818cf8;
+   --color-accent-2: #38bdf8;
+}
+
+html {
+   scroll-behavior: smooth;
+   /* offset so anchored sections clear the sticky navbar */
+   scroll-padding-top: 5rem;
+}
+
+body {
+   background-color: #09090b;
+   color: #d4d4d8;
+   -webkit-font-smoothing: antialiased;
+}
+
+/* Galactic backdrop for the world map: deep-space base + nebula glows */
+.galaxy-bg {
+   background-color: #05050a;
+   background-image:
+      radial-gradient(
+         ellipse at 28% 18%,
+         rgba(99, 102, 241, 0.22),
+         transparent 55%
+      ),
+      radial-gradient(
+         ellipse at 78% 72%,
+         rgba(56, 189, 248, 0.14),
+         transparent 50%
+      ),
+      radial-gradient(
+         ellipse at 55% 50%,
+         rgba(168, 85, 247, 0.14),
+         transparent 60%
+      );
+}
+
+/* Tiling starfield with a gentle twinkle */
+.galaxy-stars {
+   background-image:
+      radial-gradient(
+         1px 1px at 20px 30px,
+         rgba(255, 255, 255, 0.8),
+         transparent
+      ),
+      radial-gradient(
+         1px 1px at 45px 80px,
+         rgba(255, 255, 255, 0.5),
+         transparent
+      ),
+      radial-gradient(
+         1.5px 1.5px at 90px 40px,
+         rgba(255, 255, 255, 0.7),
+         transparent
+      ),
+      radial-gradient(
+         1px 1px at 130px 90px,
+         rgba(255, 255, 255, 0.45),
+         transparent
+      ),
+      radial-gradient(
+         1px 1px at 160px 30px,
+         rgba(255, 255, 255, 0.6),
+         transparent
+      ),
+      radial-gradient(
+         1.5px 1.5px at 190px 110px,
+         rgba(255, 255, 255, 0.55),
+         transparent
+      );
+   background-repeat: repeat;
+   background-size: 200px 200px;
+   animation: twinkle 6s ease-in-out infinite alternate;
+}
+
+/* Brighter, sparser foreground stars for parallax depth */
+.galaxy-stars-near {
+   background-image:
+      radial-gradient(
+         1.5px 1.5px at 30px 50px,
+         rgba(255, 255, 255, 0.95),
+         transparent
+      ),
+      radial-gradient(
+         2px 2px at 120px 150px,
+         rgba(199, 210, 254, 0.9),
+         transparent
+      ),
+      radial-gradient(
+         1.5px 1.5px at 220px 60px,
+         rgba(255, 255, 255, 0.8),
+         transparent
+      ),
+      radial-gradient(
+         2px 2px at 300px 210px,
+         rgba(255, 255, 255, 0.85),
+         transparent
+      );
+   background-repeat: repeat;
+   background-size: 360px 360px;
+   animation: twinkle 9s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+   from {
+      opacity: 0.45;
+   }
+   to {
+      opacity: 0.9;
+   }
+}
+
+/* Pulsing ring for visited-country markers */
+@keyframes marker-ping {
+   0% {
+      transform: scale(0.5);
+      opacity: 0.8;
+   }
+   70%,
+   100% {
+      transform: scale(2.6);
+      opacity: 0;
+   }
+}
+.marker-ping {
+   transform-box: fill-box;
+   transform-origin: center;
+   animation: marker-ping 2.6s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .galaxy-stars,
+   .galaxy-stars-near {
+      animation: none;
+   }
+   .marker-ping {
+      animation: none;
+      opacity: 0;
+   }
+}
+
+/* Reusable gradient text accent */
+.text-gradient {
+   background-image: linear-gradient(
+      to right,
+      var(--color-accent),
+      var(--color-accent-2)
+   );
+   -webkit-background-clip: text;
+   background-clip: text;
+   color: transparent;
+}
