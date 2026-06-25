@@ -31,8 +31,6 @@ npm run dev      # start the dev server at http://localhost:3000
 | `npm run format`       | Format the codebase with Prettier |
 | `npm run format:check` | Verify formatting (used in CI)    |
 
-
-
 Content lives as typed data in `lib/`, keeping components purely presentational
 and the site easy to update without touching markup.
 
