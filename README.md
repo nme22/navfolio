@@ -1,6 +1,6 @@
 # Navfolio
 
-Personal portfolio of **Navid M. Ebrahimi** — a single-page site built with
+Personal portfolio of **Nav Ebrahimi** a single-page site built with
 Next.js and Tailwind CSS, with a modern, refined dark theme.
 
 ## Tech stack
@@ -34,21 +34,7 @@ npm run dev      # start the dev server at http://localhost:3000
 | `npm run format`       | Format the codebase with Prettier |
 | `npm run format:check` | Verify formatting (used in CI)    |
 
-## Project structure
 
-```
-app/
-  layout.tsx       Root layout: fonts, metadata, JSON-LD structured data
-  page.tsx         The single page — composes every section
-  globals.css      Tailwind import + theme tokens
-  sitemap.ts       Generated sitemap
-  robots.ts        Generated robots.txt
-components/         Presentational section/UI components
-lib/
-  data.ts          Site content (projects, skills, hobbies, socials …)
-  site.ts          Site-level config (name, url, email) — single source of truth
-  types.ts         Shared TypeScript models
-```
 
 Content lives as typed data in `lib/`, keeping components purely presentational
 and the site easy to update without touching markup.
