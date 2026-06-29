@@ -45,9 +45,17 @@ export default function Hero() {
                </motion.p>
             </div>
 
-            {/* map band — fills the available height */}
-            <div className="relative w-full flex-1 py-4">
-               <VisitedMap />
+            {/* map band — fills the available height. The map is absolutely
+                positioned so its height resolves from this flex item's used
+                height; a plain `h-full` here would collapse to 0 because the
+                ancestors are sized by min-height, not an explicit height.
+                overflow-hidden contains the map when zoomed in (so it can't
+                paint over the header/CTAs) without clipping the travel arcs,
+                which bow slightly above the map into this band's empty space. */}
+            <div className="relative w-full flex-1 overflow-hidden">
+               <div className="absolute inset-0 py-4">
+                  <VisitedMap />
+               </div>
             </div>
 
             {/* CTA band */}

@@ -248,7 +248,6 @@ export default function VisitedMap({ initialFeatures }: VisitedMapProps) {
                stroke="url(#arc-grad)"
                strokeWidth={1}
                strokeLinecap="round"
-               vectorEffect="non-scaling-stroke"
                initial={{ pathLength: 0, opacity: 0 }}
                animate={loading ? {} : { pathLength: 1, opacity: 0.65 }}
                transition={{
@@ -356,15 +355,15 @@ export default function VisitedMap({ initialFeatures }: VisitedMapProps) {
                      <stop offset="0%" stopColor="#38bdf8" />
                      <stop offset="100%" stopColor="#a78bfa" />
                   </linearGradient>
-                  {/* Fix 1 — clip zoomed content to the 800×420 viewBox frame */}
-                  <clipPath id="map-frame">
-                     <rect x="0" y="0" width={WIDTH} height={HEIGHT} />
-                  </clipPath>
                </defs>
 
+               {/* Zoomed-content overflow is clipped at the HTML map-band level
+                   (overflow-hidden in Hero), NOT with an SVG clipPath here: the
+                   travel arcs legitimately bow above the viewBox frame, and a
+                   frame clipPath truncates them. Keeping the svg overflow-visible
+                   lets those arcs render into the band's letterbox area. */}
                <g
                   data-testid="zoom-layer"
-                  clipPath="url(#map-frame)"
                   transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
                >
                   <motion.g
