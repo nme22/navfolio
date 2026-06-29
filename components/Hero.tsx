@@ -29,7 +29,7 @@ export default function Hero() {
                transition={{ duration: 0.7, delay: 0.1 }}
                className="bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl"
             >
-               Navid M. Ebrahimi
+               Navid || Nav
             </motion.h1>
 
             <motion.p
@@ -38,8 +38,8 @@ export default function Hero() {
                transition={{ duration: 0.8, delay: 0.25 }}
                className="max-w-md text-sm text-zinc-400 sm:text-base"
             >
-               A map of the places I&apos;ve been so far. That&apos;s{' '}
-               {visitedCountries.length} countries.
+               Amount of map I&apos;ve unlocked: {''}
+               {visitedCountries.length}/195
             </motion.p>
 
             <div className="mt-2 w-full">
