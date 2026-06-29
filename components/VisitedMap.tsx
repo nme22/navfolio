@@ -1,12 +1,14 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { geoNaturalEarth1, geoPath, geoCentroid, geoInterpolate } from 'd3-geo';
 import { feature } from 'topojson-client';
 import type { Topology, GeometryCollection } from 'topojson-specification';
 import type { FeatureCollection, Geometry } from 'geojson';
-import { visitedCountries } from '@/lib/data';
+import { getTier, getVisitedCountry, getDisplayName } from '@/lib/countries';
+import CountryDrawer from '@/components/CountryDrawer';
+import type { VisitedCountry } from '@/lib/types';
 
 interface CountryProps {
    name: string;
@@ -15,15 +17,6 @@ type CountryFeature = FeatureCollection<
    Geometry,
    CountryProps
 >['features'][number];
-
-const visitedSet = new Set(visitedCountries.map((c) => c.toLowerCase()));
-
-// Prettify a couple of terse dataset labels for the tooltip.
-const displayNames: Record<string, string> = {
-   'United States of America': 'United States',
-   'Dominican Rep.': 'Dominican Republic',
-};
-const prettyName = (name: string) => displayNames[name] ?? name;
 
 const HOME_NAME = 'United States of America';
 // Center of the continental US (the 110m feature's true centroid is pulled
@@ -35,7 +28,7 @@ const HEIGHT = 420;
 
 interface Tooltip {
    label: string;
-   visited: boolean;
+   tier: 'visited' | 'wishlist' | 'other';
    x: number;
    y: number;
 }
@@ -50,12 +43,21 @@ interface Arc {
    delay: number;
 }
 
-export default function VisitedMap() {
-   const [countries, setCountries] = useState<CountryFeature[]>([]);
-   const [loading, setLoading] = useState(true);
+interface VisitedMapProps {
+   /** Test seam: when provided, render these features and skip the fetch. */
+   initialFeatures?: CountryFeature[];
+}
+
+export default function VisitedMap({ initialFeatures }: VisitedMapProps) {
+   const [countries, setCountries] = useState<CountryFeature[]>(
+      initialFeatures ?? []
+   );
+   const [loading, setLoading] = useState(!initialFeatures);
    const [tooltip, setTooltip] = useState<Tooltip | null>(null);
+   const [selected, setSelected] = useState<VisitedCountry | null>(null);
 
    useEffect(() => {
+      if (initialFeatures) return;
       let active = true;
       fetch('/world-110m.json')
          .then((res) => res.json())
@@ -76,7 +78,7 @@ export default function VisitedMap() {
       return () => {
          active = false;
       };
-   }, []);
+   }, [initialFeatures]);
 
    const projection = useMemo(
       () => geoNaturalEarth1().fitSize([WIDTH, HEIGHT], { type: 'Sphere' }),
@@ -86,8 +88,8 @@ export default function VisitedMap() {
 
    const visited = useMemo(
       () =>
-         countries.filter((c) =>
-            visitedSet.has((c.properties?.name ?? '').toLowerCase())
+         countries.filter(
+            (c) => getTier(c.properties?.name ?? '') === 'visited'
          ),
       [countries]
    );
@@ -100,7 +102,7 @@ export default function VisitedMap() {
          const point = projection(home ? HOME : geoCentroid(f));
          if (point)
             out.push({
-               label: prettyName(name),
+               label: getDisplayName(name),
                x: point[0],
                y: point[1],
                home,
@@ -128,6 +130,21 @@ export default function VisitedMap() {
       return out;
    }, [visited, projection]);
 
+   const fillClass = (
+      tier: 'visited' | 'wishlist' | 'other',
+      isSelected: boolean
+   ) => {
+      if (tier === 'visited')
+         return isSelected
+            ? 'cursor-pointer fill-indigo-300 stroke-indigo-200/70'
+            : 'cursor-pointer fill-indigo-500/90 stroke-indigo-300/50 transition-[fill] duration-150 hover:fill-indigo-400';
+      if (tier === 'wishlist')
+         return 'cursor-default fill-yellow-500/80 stroke-yellow-300/50 transition-[fill] duration-150 hover:fill-yellow-400';
+      return 'cursor-default fill-zinc-800 stroke-white/[0.08] transition-[fill] duration-150 hover:fill-zinc-700';
+   };
+
+   const closeDrawer = useCallback(() => setSelected(null), []);
+
    return (
       <div className="relative w-full">
          <div className="relative mx-auto aspect-[40/21] w-full max-w-4xl">
@@ -142,7 +159,7 @@ export default function VisitedMap() {
                viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
                className="absolute inset-0 h-full w-full overflow-visible"
                role="img"
-               aria-label="World map highlighting the countries I've visited"
+               aria-label="World map highlighting the countries I've visited and want to visit"
             >
                <defs>
                   <linearGradient id="arc-grad" x1="0" y1="0" x2="1" y2="0">
@@ -151,7 +168,6 @@ export default function VisitedMap() {
                   </linearGradient>
                </defs>
 
-               {/* countries */}
                <motion.g
                   initial={{ opacity: 0 }}
                   animate={{ opacity: loading ? 0 : 1 }}
@@ -159,32 +175,36 @@ export default function VisitedMap() {
                >
                   {countries.map((geo, index) => {
                      const name = geo.properties?.name ?? '';
-                     const isVisited = visitedSet.has(name.toLowerCase());
+                     const tier = getTier(name);
+                     const isSelected =
+                        tier === 'visited' && selected?.name === name;
                      return (
                         <path
                            key={index}
+                           data-country={name}
+                           data-tier={tier}
                            d={path(geo) ?? undefined}
                            strokeWidth={0.5}
-                           className={
-                              isVisited
-                                 ? 'cursor-default fill-indigo-500/90 stroke-indigo-300/50 transition-[fill] duration-150 hover:fill-indigo-400'
-                                 : 'cursor-default fill-zinc-800 stroke-white/[0.08] transition-[fill] duration-150 hover:fill-zinc-700'
-                           }
+                           className={fillClass(tier, isSelected)}
                            onMouseMove={(event) =>
                               setTooltip({
-                                 label: prettyName(name),
-                                 visited: isVisited,
+                                 label: getDisplayName(name),
+                                 tier,
                                  x: event.clientX,
                                  y: event.clientY,
                               })
                            }
                            onMouseLeave={() => setTooltip(null)}
+                           onClick={() => {
+                              if (tier !== 'visited') return;
+                              const country = getVisitedCountry(name);
+                              if (country) setSelected(country);
+                           }}
                         />
                      );
                   })}
                </motion.g>
 
-               {/* travel arcs from home */}
                <g className="pointer-events-none">
                   {arcs.map((arc, index) => (
                      <motion.path
@@ -210,7 +230,6 @@ export default function VisitedMap() {
                   ))}
                </g>
 
-               {/* markers */}
                <g className="pointer-events-none">
                   {markers.map((marker, index) => (
                      <g
@@ -255,13 +274,20 @@ export default function VisitedMap() {
                style={{ left: tooltip.x + 12, top: tooltip.y + 12 }}
             >
                {tooltip.label}
-               {tooltip.visited && (
+               {tooltip.tier === 'visited' && (
                   <span className="ml-1.5 font-medium text-indigo-400">
                      ✓ visited
                   </span>
                )}
+               {tooltip.tier === 'wishlist' && (
+                  <span className="ml-1.5 font-medium text-yellow-400">
+                     ★ on my list
+                  </span>
+               )}
             </div>
          )}
+
+         <CountryDrawer country={selected} onClose={closeDrawer} />
       </div>
    );
 }
