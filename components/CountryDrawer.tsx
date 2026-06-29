@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { VisitedCountry } from '@/lib/types';
 import PhotoCarousel from '@/components/PhotoCarousel';
@@ -15,6 +15,16 @@ export default function CountryDrawer({
    onClose,
 }: CountryDrawerProps) {
    const panelRef = useRef<HTMLDivElement>(null);
+   const [isDesktop, setIsDesktop] = useState(false);
+
+   useEffect(() => {
+      if (typeof window === 'undefined' || !window.matchMedia) return;
+      const mq = window.matchMedia('(min-width: 640px)');
+      setIsDesktop(mq.matches);
+      const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+      mq.addEventListener('change', onChange);
+      return () => mq.removeEventListener('change', onChange);
+   }, []);
 
    useEffect(() => {
       if (!country) return;
@@ -53,9 +63,9 @@ export default function CountryDrawer({
                   aria-label={`${country.displayName ?? country.name} travel details`}
                   tabIndex={-1}
                   className="absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto rounded-t-2xl border-t border-white/10 bg-zinc-900 p-6 outline-none sm:inset-y-0 sm:left-auto sm:right-0 sm:max-h-none sm:w-full sm:max-w-md sm:rounded-none sm:border-l sm:border-t-0"
-                  initial={{ y: '100%' }}
-                  animate={{ y: 0 }}
-                  exit={{ y: '100%' }}
+                  initial={isDesktop ? { x: '100%' } : { y: '100%' }}
+                  animate={isDesktop ? { x: 0 } : { y: 0 }}
+                  exit={isDesktop ? { x: '100%' } : { y: '100%' }}
                   transition={{ type: 'spring', stiffness: 320, damping: 32 }}
                >
                   <div className="mb-4 flex items-start justify-between gap-4">

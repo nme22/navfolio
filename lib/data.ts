@@ -189,7 +189,6 @@ export const visitedCountries: VisitedCountry[] = [
    },
    {
       name: 'United Arab Emirates',
-      displayName: 'United Arab Emirates',
       blurb: 'Layover that turned into a few days of wandering Dubai.',
       cities: [],
       people: [],
