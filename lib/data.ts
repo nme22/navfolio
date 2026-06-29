@@ -5,6 +5,8 @@ import type {
    Hobby,
    StoryBlock,
    Social,
+   VisitedCountry,
+   WishlistCountry,
 } from './types';
 
 // All site content as data, so components stay presentational.
@@ -124,19 +126,99 @@ export const projects: Project[] = [
    },
 ];
 
-// Country names exactly as they appear in public/world-110m.json so the map
-// can match them directly. Add to this list as you travel.
-export const visitedCountries: string[] = [
-   'United States of America',
-   'Canada',
-   'Mexico',
-   'Spain',
-   'Portugal',
-   'Kuwait',
-   'United Arab Emirates',
-   'Iran',
-   'Georgia',
-   'Dominican Rep.',
+// Country names match public/world-110m.json exactly so the map can match
+// them directly. `displayName` is shown in the tooltip and drawer header.
+// Spain and Iran are filled in as examples; add cities/people/photos to the
+// rest as you go. Drop real images into public/travel/ and reference them here.
+export const visitedCountries: VisitedCountry[] = [
+   {
+      name: 'United States of America',
+      displayName: 'United States',
+      blurb: 'Home base. Grew up between Queens and South Jersey and have road-tripped a good chunk of the country since.',
+      cities: ['New York', 'Philadelphia', 'Los Angeles'],
+      people: ['Family'],
+      photos: [],
+   },
+   {
+      name: 'Spain',
+      blurb: "One of my favorite trips. We ate our way through the country and stayed out way too late more nights than I'll admit.",
+      cities: ['Barcelona', 'Madrid', 'Seville'],
+      people: ['College friends'],
+      photos: [
+         { src: '/travel/spain-1.svg', alt: 'Sunset over Barcelona rooftops' },
+         { src: '/travel/spain-2.svg', alt: 'Plaza in Seville' },
+      ],
+   },
+   {
+      name: 'Iran',
+      blurb: 'Where my family is from. Visiting felt like filling in a part of myself I had only heard stories about.',
+      cities: ['Tehran', 'Shiraz', 'Isfahan'],
+      people: ['Extended family'],
+      photos: [
+         { src: '/travel/iran-1.svg', alt: 'Bazaar in Tehran' },
+         { src: '/travel/iran-2.svg', alt: 'Tilework in Isfahan' },
+      ],
+   },
+   {
+      name: 'Canada',
+      blurb: 'Quick trips up north. Cleaner air and friendlier people than I had any right to expect.',
+      cities: [],
+      people: [],
+      photos: [],
+   },
+   {
+      name: 'Mexico',
+      blurb: 'Beaches, food, and family time. Always an easy yes.',
+      cities: [],
+      people: [],
+      photos: [],
+   },
+   {
+      name: 'Portugal',
+      blurb: 'Tacked onto the Spain trip and ended up loving it just as much.',
+      cities: [],
+      people: [],
+      photos: [],
+   },
+   {
+      name: 'Kuwait',
+      blurb: 'A stop on the way to see family. Hot enough to remember.',
+      cities: [],
+      people: [],
+      photos: [],
+   },
+   {
+      name: 'United Arab Emirates',
+      displayName: 'United Arab Emirates',
+      blurb: 'Layover that turned into a few days of wandering Dubai.',
+      cities: [],
+      people: [],
+      photos: [],
+   },
+   {
+      name: 'Georgia',
+      blurb: 'Underrated. Mountains, old churches, and some of the best food I have had.',
+      cities: [],
+      people: [],
+      photos: [],
+   },
+   {
+      name: 'Dominican Rep.',
+      displayName: 'Dominican Republic',
+      blurb: 'A proper reset by the water.',
+      cities: [],
+      people: [],
+      photos: [],
+   },
+];
+
+// Countries I want to get to. Highlighted yellow on the map (visual only).
+// Scotland is not its own shape in the dataset, so the UK stands in for it.
+export const wishlistCountries: WishlistCountry[] = [
+   { name: 'Japan' },
+   { name: 'Finland' },
+   { name: 'New Zealand' },
+   { name: 'United Kingdom' },
 ];
 
 export const spotifyPlaylist =
