@@ -56,6 +56,20 @@ interface VisitedMapProps {
    initialFeatures?: CountryFeature[];
 }
 
+// Pure utility — no component state, safe at module level.
+function fillClass(
+   tier: 'visited' | 'wishlist' | 'other',
+   isSelected: boolean
+) {
+   if (tier === 'visited')
+      return isSelected
+         ? 'cursor-pointer fill-indigo-300 stroke-indigo-200/70'
+         : 'cursor-pointer fill-indigo-500/90 stroke-indigo-300/50 transition-[fill] duration-150 hover:fill-indigo-400';
+   if (tier === 'wishlist')
+      return 'cursor-default fill-yellow-500/80 stroke-yellow-300/50 transition-[fill] duration-150 hover:fill-yellow-400';
+   return 'cursor-default fill-zinc-800 stroke-white/[0.08] transition-[fill] duration-150 hover:fill-zinc-700';
+}
+
 export default function VisitedMap({ initialFeatures }: VisitedMapProps) {
    const [countries, setCountries] = useState<CountryFeature[]>(
       initialFeatures ?? []
@@ -145,19 +159,6 @@ export default function VisitedMap({ initialFeatures }: VisitedMapProps) {
       return out;
    }, [visited, projection]);
 
-   const fillClass = (
-      tier: 'visited' | 'wishlist' | 'other',
-      isSelected: boolean
-   ) => {
-      if (tier === 'visited')
-         return isSelected
-            ? 'cursor-pointer fill-indigo-300 stroke-indigo-200/70'
-            : 'cursor-pointer fill-indigo-500/90 stroke-indigo-300/50 transition-[fill] duration-150 hover:fill-indigo-400';
-      if (tier === 'wishlist')
-         return 'cursor-default fill-yellow-500/80 stroke-yellow-300/50 transition-[fill] duration-150 hover:fill-yellow-400';
-      return 'cursor-default fill-zinc-800 stroke-white/[0.08] transition-[fill] duration-150 hover:fill-zinc-700';
-   };
-
    // --- zoom + pan ---
    const zoomIn = () =>
       setTransform((t) =>
@@ -182,7 +183,10 @@ export default function VisitedMap({ initialFeatures }: VisitedMapProps) {
       if (!didDrag.current && Math.hypot(dxPx, dyPx) > DRAG_THRESHOLD)
          didDrag.current = true;
       const rect = svgRef.current?.getBoundingClientRect();
-      const ratio = rect && rect.width ? WIDTH / rect.width : 1;
+      const ratio =
+         rect && rect.width && rect.height
+            ? Math.max(WIDTH / rect.width, HEIGHT / rect.height)
+            : 1;
       setTransform((t) =>
          clampTranslate(
             { k: t.k, x: t.x + dxPx * ratio, y: t.y + dyPx * ratio },
@@ -195,6 +199,104 @@ export default function VisitedMap({ initialFeatures }: VisitedMapProps) {
    const endDrag = () => {
       drag.current.active = false;
    };
+
+   // Fix 2 — memoize rendered elements so pan/zoom only updates the transform
+   // attribute, not all the geometry computation inside.
+   const countryPaths = useMemo(
+      () =>
+         countries.map((geo, index) => {
+            const name = geo.properties?.name ?? '';
+            const tier = getTier(name);
+            const isSelected = tier === 'visited' && selected?.name === name;
+            return (
+               <path
+                  key={index}
+                  data-country={name}
+                  data-tier={tier}
+                  d={path(geo) ?? undefined}
+                  strokeWidth={0.5}
+                  vectorEffect="non-scaling-stroke"
+                  className={fillClass(tier, isSelected)}
+                  onMouseMove={(event) =>
+                     setTooltip({
+                        label: getDisplayName(name),
+                        tier,
+                        x: event.clientX,
+                        y: event.clientY,
+                     })
+                  }
+                  onMouseLeave={() => setTooltip(null)}
+                  onClick={() => {
+                     if (didDrag.current) return;
+                     if (tier !== 'visited') return;
+                     const country = getVisitedCountry(name);
+                     if (country) setSelected(country);
+                  }}
+               />
+            );
+         }),
+      [countries, path, selected]
+   );
+
+   const arcEls = useMemo(
+      () =>
+         arcs.map((arc, index) => (
+            <motion.path
+               key={index}
+               d={arc.d}
+               fill="none"
+               stroke="url(#arc-grad)"
+               strokeWidth={1}
+               strokeLinecap="round"
+               vectorEffect="non-scaling-stroke"
+               initial={{ pathLength: 0, opacity: 0 }}
+               animate={loading ? {} : { pathLength: 1, opacity: 0.65 }}
+               transition={{
+                  duration: 1.4,
+                  delay: 0.6 + arc.delay,
+                  ease: 'easeInOut',
+               }}
+               style={{
+                  filter: 'drop-shadow(0 0 3px rgba(129,140,248,0.7))',
+               }}
+            />
+         )),
+      [arcs, loading]
+   );
+
+   const markerEls = useMemo(
+      () =>
+         markers.map((marker, index) => (
+            <g key={index} transform={`translate(${marker.x}, ${marker.y})`}>
+               <circle
+                  r={5}
+                  fill="none"
+                  strokeWidth={1}
+                  className="marker-ping"
+                  stroke={marker.home ? '#38bdf8' : '#818cf8'}
+                  style={{ animationDelay: `${index * 0.3}s` }}
+               />
+               <motion.circle
+                  r={marker.home ? 3.2 : 2.6}
+                  fill={marker.home ? '#38bdf8' : '#a5b4fc'}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={loading ? {} : { scale: 1, opacity: 1 }}
+                  transition={{
+                     delay: 0.8 + index * 0.07,
+                     type: 'spring',
+                     stiffness: 320,
+                     damping: 18,
+                  }}
+                  style={{
+                     transformBox: 'fill-box',
+                     transformOrigin: 'center',
+                     filter: 'drop-shadow(0 0 5px rgba(129,140,248,0.95))',
+                  }}
+               />
+            </g>
+         )),
+      [markers, loading]
+   );
 
    return (
       <div className="relative h-full w-full">
@@ -235,11 +337,13 @@ export default function VisitedMap({ initialFeatures }: VisitedMapProps) {
                </button>
             </div>
 
+            {/* Fix 3 — allow vertical page-scroll at default zoom; capture touch only when zoomed */}
             <svg
                ref={svgRef}
                viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
                preserveAspectRatio="xMidYMid meet"
-               className="absolute inset-0 h-full w-full cursor-grab touch-none overflow-visible active:cursor-grabbing"
+               className="absolute inset-0 h-full w-full cursor-grab overflow-visible active:cursor-grabbing"
+               style={{ touchAction: transform.k > 1 ? 'none' : 'pan-y' }}
                role="img"
                aria-label="World map highlighting the countries I've visited and want to visit"
                onPointerDown={onPointerDown}
@@ -252,10 +356,15 @@ export default function VisitedMap({ initialFeatures }: VisitedMapProps) {
                      <stop offset="0%" stopColor="#38bdf8" />
                      <stop offset="100%" stopColor="#a78bfa" />
                   </linearGradient>
+                  {/* Fix 1 — clip zoomed content to the 800×420 viewBox frame */}
+                  <clipPath id="map-frame">
+                     <rect x="0" y="0" width={WIDTH} height={HEIGHT} />
+                  </clipPath>
                </defs>
 
                <g
                   data-testid="zoom-layer"
+                  clipPath="url(#map-frame)"
                   transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
                >
                   <motion.g
@@ -263,102 +372,12 @@ export default function VisitedMap({ initialFeatures }: VisitedMapProps) {
                      animate={{ opacity: loading ? 0 : 1 }}
                      transition={{ duration: 0.8 }}
                   >
-                     {countries.map((geo, index) => {
-                        const name = geo.properties?.name ?? '';
-                        const tier = getTier(name);
-                        const isSelected =
-                           tier === 'visited' && selected?.name === name;
-                        return (
-                           <path
-                              key={index}
-                              data-country={name}
-                              data-tier={tier}
-                              d={path(geo) ?? undefined}
-                              strokeWidth={0.5}
-                              vectorEffect="non-scaling-stroke"
-                              className={fillClass(tier, isSelected)}
-                              onMouseMove={(event) =>
-                                 setTooltip({
-                                    label: getDisplayName(name),
-                                    tier,
-                                    x: event.clientX,
-                                    y: event.clientY,
-                                 })
-                              }
-                              onMouseLeave={() => setTooltip(null)}
-                              onClick={() => {
-                                 if (didDrag.current) return;
-                                 if (tier !== 'visited') return;
-                                 const country = getVisitedCountry(name);
-                                 if (country) setSelected(country);
-                              }}
-                           />
-                        );
-                     })}
+                     {countryPaths}
                   </motion.g>
 
-                  <g className="pointer-events-none">
-                     {arcs.map((arc, index) => (
-                        <motion.path
-                           key={index}
-                           d={arc.d}
-                           fill="none"
-                           stroke="url(#arc-grad)"
-                           strokeWidth={1}
-                           strokeLinecap="round"
-                           vectorEffect="non-scaling-stroke"
-                           initial={{ pathLength: 0, opacity: 0 }}
-                           animate={
-                              loading ? {} : { pathLength: 1, opacity: 0.65 }
-                           }
-                           transition={{
-                              duration: 1.4,
-                              delay: 0.6 + arc.delay,
-                              ease: 'easeInOut',
-                           }}
-                           style={{
-                              filter:
-                                 'drop-shadow(0 0 3px rgba(129,140,248,0.7))',
-                           }}
-                        />
-                     ))}
-                  </g>
+                  <g className="pointer-events-none">{arcEls}</g>
 
-                  <g className="pointer-events-none">
-                     {markers.map((marker, index) => (
-                        <g
-                           key={index}
-                           transform={`translate(${marker.x}, ${marker.y})`}
-                        >
-                           <circle
-                              r={5}
-                              fill="none"
-                              strokeWidth={1}
-                              className="marker-ping"
-                              stroke={marker.home ? '#38bdf8' : '#818cf8'}
-                              style={{ animationDelay: `${index * 0.3}s` }}
-                           />
-                           <motion.circle
-                              r={marker.home ? 3.2 : 2.6}
-                              fill={marker.home ? '#38bdf8' : '#a5b4fc'}
-                              initial={{ scale: 0, opacity: 0 }}
-                              animate={loading ? {} : { scale: 1, opacity: 1 }}
-                              transition={{
-                                 delay: 0.8 + index * 0.07,
-                                 type: 'spring',
-                                 stiffness: 320,
-                                 damping: 18,
-                              }}
-                              style={{
-                                 transformBox: 'fill-box',
-                                 transformOrigin: 'center',
-                                 filter:
-                                    'drop-shadow(0 0 5px rgba(129,140,248,0.95))',
-                              }}
-                           />
-                        </g>
-                     ))}
-                  </g>
+                  <g className="pointer-events-none">{markerEls}</g>
                </g>
             </svg>
          </div>
