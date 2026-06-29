@@ -107,13 +107,15 @@ describe('VisitedMap', () => {
       const svg = document.querySelector('svg[role="img"]') as Element;
       // zoom in first so there is room to pan (at scale 1, translate pins to 0)
       fireEvent.click(screen.getByRole('button', { name: /zoom in/i }));
+      const layer = document.querySelector('[data-testid="zoom-layer"]');
+      const afterZoom = layer?.getAttribute('transform');
       fireEvent.pointerDown(svg, { clientX: 100, clientY: 100 });
       fireEvent.pointerMove(svg, { clientX: 60, clientY: 70 });
       fireEvent.pointerUp(svg, { clientX: 60, clientY: 70 });
-      const layer = document.querySelector('[data-testid="zoom-layer"]');
-      expect(layer?.getAttribute('transform')).not.toBe(
-         'translate(0 0) scale(1.6)'
-      );
+      const afterDrag = layer?.getAttribute('transform');
+      expect(afterDrag).not.toBe(afterZoom);
+      // the drag moved the map up-left from its post-zoom position
+      expect(afterDrag).toContain('scale(1.6)');
    });
 
    it('does not open the drawer when a country is dragged', () => {
