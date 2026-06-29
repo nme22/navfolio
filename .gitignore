@@ -11,3 +11,6 @@ next-env.d.ts
 # misc
 .vercel
 .env*.local
+
+# superpowers design docs (kept local, never pushed)
+docs/superpowers/
