@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
 import CountryDrawer from '@/components/CountryDrawer';
 import type { VisitedCountry } from '@/lib/types';
 
@@ -60,5 +61,28 @@ describe('CountryDrawer', () => {
       render(<CountryDrawer country={country} onClose={onClose} />);
       await user.keyboard('{Escape}');
       expect(onClose).toHaveBeenCalledTimes(1);
+   });
+
+   it('restores focus to the previously focused element on close', async () => {
+      const user = userEvent.setup();
+      function Harness() {
+         const [open, setOpen] = useState(false);
+         return (
+            <>
+               <button onClick={() => setOpen(true)}>open</button>
+               <CountryDrawer
+                  country={open ? country : null}
+                  onClose={() => setOpen(false)}
+               />
+            </>
+         );
+      }
+      render(<Harness />);
+      const opener = screen.getByRole('button', { name: 'open' });
+      opener.focus();
+      await user.click(opener); // opens the drawer; focus moves into the panel
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      await user.keyboard('{Escape}'); // closes
+      await waitFor(() => expect(opener).toHaveFocus());
    });
 });

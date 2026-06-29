@@ -28,6 +28,7 @@ export default function CountryDrawer({
 
    useEffect(() => {
       if (!country) return;
+      const previouslyFocused = document.activeElement as HTMLElement | null;
       const onKey = (event: KeyboardEvent) => {
          if (event.key === 'Escape') onClose();
       };
@@ -38,6 +39,7 @@ export default function CountryDrawer({
       return () => {
          document.removeEventListener('keydown', onKey);
          document.body.style.overflow = previousOverflow;
+         previouslyFocused?.focus?.();
       };
    }, [country, onClose]);
 
