@@ -60,3 +60,27 @@ export interface NavLink {
    label: string;
    href: string;
 }
+
+export interface TravelPhoto {
+   src: string;
+   alt: string;
+}
+
+export interface VisitedCountry {
+   /** Must match the country name in public/world-110m.json exactly. */
+   name: string;
+   /** Prettier label for the drawer header and tooltip. */
+   displayName?: string;
+   /** Short rundown of the trip. */
+   blurb: string;
+   cities: string[];
+   /** Who I was there with. */
+   people: string[];
+   photos: TravelPhoto[];
+}
+
+export interface WishlistCountry {
+   /** Must match the country name in public/world-110m.json exactly. */
+   name: string;
+   displayName?: string;
+}

@@ -1,12 +1,21 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { geoNaturalEarth1, geoPath, geoCentroid, geoInterpolate } from 'd3-geo';
 import { feature } from 'topojson-client';
 import type { Topology, GeometryCollection } from 'topojson-specification';
 import type { FeatureCollection, Geometry } from 'geojson';
-import { visitedCountries } from '@/lib/data';
+import { getTier, getVisitedCountry, getDisplayName } from '@/lib/countries';
+import {
+   IDENTITY,
+   ZOOM_STEP,
+   clampTranslate,
+   zoomToward,
+   type Transform,
+} from '@/lib/mapZoom';
+import CountryDrawer from '@/components/CountryDrawer';
+import type { VisitedCountry } from '@/lib/types';
 
 interface CountryProps {
    name: string;
@@ -16,15 +25,6 @@ type CountryFeature = FeatureCollection<
    CountryProps
 >['features'][number];
 
-const visitedSet = new Set(visitedCountries.map((c) => c.toLowerCase()));
-
-// Prettify a couple of terse dataset labels for the tooltip.
-const displayNames: Record<string, string> = {
-   'United States of America': 'United States',
-   'Dominican Rep.': 'Dominican Republic',
-};
-const prettyName = (name: string) => displayNames[name] ?? name;
-
 const HOME_NAME = 'United States of America';
 // Center of the continental US (the 110m feature's true centroid is pulled
 // north-west by Alaska, so we anchor the home base by hand).
@@ -32,10 +32,11 @@ const HOME: [number, number] = [-98, 39];
 
 const WIDTH = 800;
 const HEIGHT = 420;
+const DRAG_THRESHOLD = 4; // px of movement before a press counts as a drag
 
 interface Tooltip {
    label: string;
-   visited: boolean;
+   tier: 'visited' | 'wishlist' | 'other';
    x: number;
    y: number;
 }
@@ -50,12 +51,42 @@ interface Arc {
    delay: number;
 }
 
-export default function VisitedMap() {
-   const [countries, setCountries] = useState<CountryFeature[]>([]);
-   const [loading, setLoading] = useState(true);
+interface VisitedMapProps {
+   /** Test seam: when provided, render these features and skip the fetch. */
+   initialFeatures?: CountryFeature[];
+}
+
+// Pure utility — no component state, safe at module level.
+function fillClass(
+   tier: 'visited' | 'wishlist' | 'other',
+   isSelected: boolean
+) {
+   if (tier === 'visited')
+      return isSelected
+         ? 'cursor-pointer fill-indigo-300 stroke-indigo-200/70'
+         : 'cursor-pointer fill-indigo-500/90 stroke-indigo-300/50 transition-[fill] duration-150 hover:fill-indigo-400';
+   if (tier === 'wishlist')
+      return 'cursor-default fill-yellow-500/80 stroke-yellow-300/50 transition-[fill] duration-150 hover:fill-yellow-400';
+   return 'cursor-default fill-zinc-800 stroke-white/[0.08] transition-[fill] duration-150 hover:fill-zinc-700';
+}
+
+export default function VisitedMap({ initialFeatures }: VisitedMapProps) {
+   const [countries, setCountries] = useState<CountryFeature[]>(
+      initialFeatures ?? []
+   );
+   const [loading, setLoading] = useState(!initialFeatures);
    const [tooltip, setTooltip] = useState<Tooltip | null>(null);
+   const [selected, setSelected] = useState<VisitedCountry | null>(null);
+   const [transform, setTransform] = useState<Transform>(IDENTITY);
+
+   const svgRef = useRef<SVGSVGElement>(null);
+   const drag = useRef({ active: false, x: 0, y: 0 });
+   const didDrag = useRef(false);
+
+   const closeDrawer = useCallback(() => setSelected(null), []);
 
    useEffect(() => {
+      if (initialFeatures) return;
       let active = true;
       fetch('/world-110m.json')
          .then((res) => res.json())
@@ -76,7 +107,7 @@ export default function VisitedMap() {
       return () => {
          active = false;
       };
-   }, []);
+   }, [initialFeatures]);
 
    const projection = useMemo(
       () => geoNaturalEarth1().fitSize([WIDTH, HEIGHT], { type: 'Sphere' }),
@@ -86,8 +117,8 @@ export default function VisitedMap() {
 
    const visited = useMemo(
       () =>
-         countries.filter((c) =>
-            visitedSet.has((c.properties?.name ?? '').toLowerCase())
+         countries.filter(
+            (c) => getTier(c.properties?.name ?? '') === 'visited'
          ),
       [countries]
    );
@@ -100,7 +131,7 @@ export default function VisitedMap() {
          const point = projection(home ? HOME : geoCentroid(f));
          if (point)
             out.push({
-               label: prettyName(name),
+               label: getDisplayName(name),
                x: point[0],
                y: point[1],
                home,
@@ -128,9 +159,147 @@ export default function VisitedMap() {
       return out;
    }, [visited, projection]);
 
+   // --- zoom + pan ---
+   const zoomIn = () =>
+      setTransform((t) =>
+         zoomToward(t, ZOOM_STEP, WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT)
+      );
+   const zoomOut = () =>
+      setTransform((t) =>
+         zoomToward(t, 1 / ZOOM_STEP, WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT)
+      );
+   const resetZoom = () => setTransform(IDENTITY);
+   const isIdentity =
+      transform.k === IDENTITY.k && transform.x === 0 && transform.y === 0;
+
+   const onPointerDown = (event: React.PointerEvent<SVGSVGElement>) => {
+      drag.current = { active: true, x: event.clientX, y: event.clientY };
+      didDrag.current = false;
+   };
+   const onPointerMove = (event: React.PointerEvent<SVGSVGElement>) => {
+      if (!drag.current.active) return;
+      const dxPx = event.clientX - drag.current.x;
+      const dyPx = event.clientY - drag.current.y;
+      if (!didDrag.current && Math.hypot(dxPx, dyPx) > DRAG_THRESHOLD)
+         didDrag.current = true;
+      const rect = svgRef.current?.getBoundingClientRect();
+      const ratio =
+         rect && rect.width && rect.height
+            ? Math.max(WIDTH / rect.width, HEIGHT / rect.height)
+            : 1;
+      setTransform((t) =>
+         clampTranslate(
+            { k: t.k, x: t.x + dxPx * ratio, y: t.y + dyPx * ratio },
+            WIDTH,
+            HEIGHT
+         )
+      );
+      drag.current = { active: true, x: event.clientX, y: event.clientY };
+   };
+   const endDrag = () => {
+      drag.current.active = false;
+   };
+
+   // Fix 2 — memoize rendered elements so pan/zoom only updates the transform
+   // attribute, not all the geometry computation inside.
+   const countryPaths = useMemo(
+      () =>
+         countries.map((geo, index) => {
+            const name = geo.properties?.name ?? '';
+            const tier = getTier(name);
+            const isSelected = tier === 'visited' && selected?.name === name;
+            return (
+               <path
+                  key={index}
+                  data-country={name}
+                  data-tier={tier}
+                  d={path(geo) ?? undefined}
+                  strokeWidth={0.5}
+                  vectorEffect="non-scaling-stroke"
+                  className={fillClass(tier, isSelected)}
+                  onMouseMove={(event) =>
+                     setTooltip({
+                        label: getDisplayName(name),
+                        tier,
+                        x: event.clientX,
+                        y: event.clientY,
+                     })
+                  }
+                  onMouseLeave={() => setTooltip(null)}
+                  onClick={() => {
+                     if (didDrag.current) return;
+                     if (tier !== 'visited') return;
+                     const country = getVisitedCountry(name);
+                     if (country) setSelected(country);
+                  }}
+               />
+            );
+         }),
+      [countries, path, selected]
+   );
+
+   const arcEls = useMemo(
+      () =>
+         arcs.map((arc, index) => (
+            <motion.path
+               key={index}
+               d={arc.d}
+               fill="none"
+               stroke="url(#arc-grad)"
+               strokeWidth={1}
+               strokeLinecap="round"
+               initial={{ pathLength: 0, opacity: 0 }}
+               animate={loading ? {} : { pathLength: 1, opacity: 0.65 }}
+               transition={{
+                  duration: 1.4,
+                  delay: 0.6 + arc.delay,
+                  ease: 'easeInOut',
+               }}
+               style={{
+                  filter: 'drop-shadow(0 0 3px rgba(129,140,248,0.7))',
+               }}
+            />
+         )),
+      [arcs, loading]
+   );
+
+   const markerEls = useMemo(
+      () =>
+         markers.map((marker, index) => (
+            <g key={index} transform={`translate(${marker.x}, ${marker.y})`}>
+               <circle
+                  r={5}
+                  fill="none"
+                  strokeWidth={1}
+                  className="marker-ping"
+                  stroke={marker.home ? '#38bdf8' : '#818cf8'}
+                  style={{ animationDelay: `${index * 0.3}s` }}
+               />
+               <motion.circle
+                  r={marker.home ? 3.2 : 2.6}
+                  fill={marker.home ? '#38bdf8' : '#a5b4fc'}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={loading ? {} : { scale: 1, opacity: 1 }}
+                  transition={{
+                     delay: 0.8 + index * 0.07,
+                     type: 'spring',
+                     stiffness: 320,
+                     damping: 18,
+                  }}
+                  style={{
+                     transformBox: 'fill-box',
+                     transformOrigin: 'center',
+                     filter: 'drop-shadow(0 0 5px rgba(129,140,248,0.95))',
+                  }}
+               />
+            </g>
+         )),
+      [markers, loading]
+   );
+
    return (
-      <div className="relative w-full">
-         <div className="relative mx-auto aspect-[40/21] w-full max-w-4xl">
+      <div className="relative h-full w-full">
+         <div className="relative mx-auto h-full w-full">
             {loading && (
                <div className="absolute inset-0 z-10 flex items-center justify-center gap-3 text-sm text-zinc-400">
                   <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/20 border-t-indigo-400" />
@@ -138,11 +307,48 @@ export default function VisitedMap() {
                </div>
             )}
 
+            {/* zoom controls */}
+            <div className="absolute right-3 top-3 z-20 flex flex-col gap-1.5">
+               <button
+                  type="button"
+                  aria-label="Zoom in"
+                  onClick={zoomIn}
+                  className="flex h-8 w-8 items-center justify-center rounded-md border border-white/15 bg-zinc-900/80 text-lg leading-none text-zinc-100 hover:bg-zinc-800"
+               >
+                  +
+               </button>
+               <button
+                  type="button"
+                  aria-label="Zoom out"
+                  onClick={zoomOut}
+                  className="flex h-8 w-8 items-center justify-center rounded-md border border-white/15 bg-zinc-900/80 text-lg leading-none text-zinc-100 hover:bg-zinc-800"
+               >
+                  −
+               </button>
+               <button
+                  type="button"
+                  aria-label="Reset zoom"
+                  onClick={resetZoom}
+                  disabled={isIdentity}
+                  className="flex h-8 w-8 items-center justify-center rounded-md border border-white/15 bg-zinc-900/80 text-sm leading-none text-zinc-100 hover:bg-zinc-800 disabled:cursor-default disabled:opacity-40"
+               >
+                  ⟲
+               </button>
+            </div>
+
+            {/* Fix 3 — allow vertical page-scroll at default zoom; capture touch only when zoomed */}
             <svg
+               ref={svgRef}
                viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-               className="absolute inset-0 h-full w-full overflow-visible"
+               preserveAspectRatio="xMidYMid meet"
+               className="absolute inset-0 h-full w-full cursor-grab overflow-visible active:cursor-grabbing"
+               style={{ touchAction: transform.k > 1 ? 'none' : 'pan-y' }}
                role="img"
-               aria-label="World map highlighting the countries I've visited"
+               aria-label="World map highlighting the countries I've visited and want to visit"
+               onPointerDown={onPointerDown}
+               onPointerMove={onPointerMove}
+               onPointerUp={endDrag}
+               onPointerLeave={endDrag}
             >
                <defs>
                   <linearGradient id="arc-grad" x1="0" y1="0" x2="1" y2="0">
@@ -151,100 +357,26 @@ export default function VisitedMap() {
                   </linearGradient>
                </defs>
 
-               {/* countries */}
-               <motion.g
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: loading ? 0 : 1 }}
-                  transition={{ duration: 0.8 }}
+               {/* Zoomed-content overflow is clipped at the HTML map-band level
+                   (overflow-hidden in Hero), NOT with an SVG clipPath here: the
+                   travel arcs legitimately bow above the viewBox frame, and a
+                   frame clipPath truncates them. Keeping the svg overflow-visible
+                   lets those arcs render into the band's letterbox area. */}
+               <g
+                  data-testid="zoom-layer"
+                  transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
                >
-                  {countries.map((geo, index) => {
-                     const name = geo.properties?.name ?? '';
-                     const isVisited = visitedSet.has(name.toLowerCase());
-                     return (
-                        <path
-                           key={index}
-                           d={path(geo) ?? undefined}
-                           strokeWidth={0.5}
-                           className={
-                              isVisited
-                                 ? 'cursor-default fill-indigo-500/90 stroke-indigo-300/50 transition-[fill] duration-150 hover:fill-indigo-400'
-                                 : 'cursor-default fill-zinc-800 stroke-white/[0.08] transition-[fill] duration-150 hover:fill-zinc-700'
-                           }
-                           onMouseMove={(event) =>
-                              setTooltip({
-                                 label: prettyName(name),
-                                 visited: isVisited,
-                                 x: event.clientX,
-                                 y: event.clientY,
-                              })
-                           }
-                           onMouseLeave={() => setTooltip(null)}
-                        />
-                     );
-                  })}
-               </motion.g>
+                  <motion.g
+                     initial={{ opacity: 0 }}
+                     animate={{ opacity: loading ? 0 : 1 }}
+                     transition={{ duration: 0.8 }}
+                  >
+                     {countryPaths}
+                  </motion.g>
 
-               {/* travel arcs from home */}
-               <g className="pointer-events-none">
-                  {arcs.map((arc, index) => (
-                     <motion.path
-                        key={index}
-                        d={arc.d}
-                        fill="none"
-                        stroke="url(#arc-grad)"
-                        strokeWidth={1}
-                        strokeLinecap="round"
-                        initial={{ pathLength: 0, opacity: 0 }}
-                        animate={
-                           loading ? {} : { pathLength: 1, opacity: 0.65 }
-                        }
-                        transition={{
-                           duration: 1.4,
-                           delay: 0.6 + arc.delay,
-                           ease: 'easeInOut',
-                        }}
-                        style={{
-                           filter: 'drop-shadow(0 0 3px rgba(129,140,248,0.7))',
-                        }}
-                     />
-                  ))}
-               </g>
+                  <g className="pointer-events-none">{arcEls}</g>
 
-               {/* markers */}
-               <g className="pointer-events-none">
-                  {markers.map((marker, index) => (
-                     <g
-                        key={index}
-                        transform={`translate(${marker.x}, ${marker.y})`}
-                     >
-                        <circle
-                           r={5}
-                           fill="none"
-                           strokeWidth={1}
-                           className="marker-ping"
-                           stroke={marker.home ? '#38bdf8' : '#818cf8'}
-                           style={{ animationDelay: `${index * 0.3}s` }}
-                        />
-                        <motion.circle
-                           r={marker.home ? 3.2 : 2.6}
-                           fill={marker.home ? '#38bdf8' : '#a5b4fc'}
-                           initial={{ scale: 0, opacity: 0 }}
-                           animate={loading ? {} : { scale: 1, opacity: 1 }}
-                           transition={{
-                              delay: 0.8 + index * 0.07,
-                              type: 'spring',
-                              stiffness: 320,
-                              damping: 18,
-                           }}
-                           style={{
-                              transformBox: 'fill-box',
-                              transformOrigin: 'center',
-                              filter:
-                                 'drop-shadow(0 0 5px rgba(129,140,248,0.95))',
-                           }}
-                        />
-                     </g>
-                  ))}
+                  <g className="pointer-events-none">{markerEls}</g>
                </g>
             </svg>
          </div>
@@ -255,13 +387,20 @@ export default function VisitedMap() {
                style={{ left: tooltip.x + 12, top: tooltip.y + 12 }}
             >
                {tooltip.label}
-               {tooltip.visited && (
+               {tooltip.tier === 'visited' && (
                   <span className="ml-1.5 font-medium text-indigo-400">
                      ✓ visited
                   </span>
                )}
+               {tooltip.tier === 'wishlist' && (
+                  <span className="ml-1.5 font-medium text-yellow-400">
+                     ★ on my list
+                  </span>
+               )}
             </div>
          )}
+
+         <CountryDrawer country={selected} onClose={closeDrawer} />
       </div>
    );
 }
